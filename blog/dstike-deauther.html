@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DSTIKE Deauther Watch: pentesting desde la muñeca — HackPeru Blog</title>
+  <meta name="description" content="Review del DSTIKE Deauther Watch. Auditoría WiFi con ESP8266 en forma de reloj. Comparativa con ESP32 Marauder y WiFi Pineapple." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;600;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="blog.css" />
+</head>
+<body>
+
+<a id="wa-float" href="https://wa.me/51999999999?text=Hola%20HackPeru%20%F0%9F%91%8B%20Vi%20el%20artículo%20del%20Deauther%20Watch%20y%20quiero%20información." target="_blank" rel="noopener">
+  <span class="pulse"></span><i class="fa-brands fa-whatsapp"></i>
+</a>
+
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="../index.html" class="nav-logo"><i class="fa-solid fa-shield-halved"></i><span>HACK<span style="color:#fff">PERU</span></span></a>
+    <ul class="nav-links">
+      <li><a href="../index.html#inicio">Inicio</a></li>
+      <li><a href="../index.html#productos">Productos</a></li>
+      <li><a href="../index.html#servicios">Asesoría</a></li>
+      <li><a href="../index.html#taller">Taller</a></li>
+      <li><a href="index.html" class="active">Blog</a></li>
+      <li><a href="https://wa.me/51999999999" target="_blank" rel="noopener" class="nav-wa"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a></li>
+    </ul>
+    <button id="menu-toggle"><i class="fa-solid fa-bars"></i></button>
+  </div>
+  <div id="mobile-menu">
+    <a href="../index.html">Inicio</a><a href="../index.html#productos">Productos</a>
+    <a href="../index.html#taller">Taller</a><a href="index.html">Blog</a>
+  </div>
+</nav>
+
+<header class="article-hero" style="background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(239,68,68,.07) 0%, transparent 60%), linear-gradient(180deg, var(--bg0) 0%, var(--bg1) 100%);">
+  <div class="hero-inner">
+    <a href="index.html" class="back-link"><i class="fa-solid fa-arrow-left"></i> Volver al blog</a>
+    <span class="article-category cat-red"><i class="fa-solid fa-clock"></i> WiFi Audit · Wearable</span>
+    <h1 class="article-title">DSTIKE Deauther Watch: cuando el pentesting va en tu muñeca</h1>
+    <div class="article-meta">
+      <span><i class="fa-regular fa-calendar"></i> 18 de marzo, 2026</span>
+      <span><i class="fa-regular fa-clock"></i> 2 min de lectura</span>
+      <span><i class="fa-solid fa-tag"></i> ESP8266, WiFi, Wearable, Deauth</span>
+    </div>
+  </div>
+</header>
+
+<div class="article-wrap">
+  <article class="article-body">
+
+    <p>Hacer una auditoría WiFi básica normalmente implica sacar la laptop, abrir Kali o conectar el ESP32 Marauder, revisar la pantalla, ejecutar el scan. Visible, aparatoso, nada discreto. El DSTIKE Deauther Watch comprime ese proceso en un reloj de pulsera que desde afuera no se diferencia de un smartwatch barato.</p>
+
+    <p>La idea es del mismo creador del proyecto ESP8266 Deauther — SpachuLLC — que empezó como un script educativo para demostrar que los ataques de deautenticación WiFi son un vector de ataque real y documentado. El reloj es la evolución natural: llevar esa demostración encima sin que nadie lo note.</p>
+
+    <h2>Qué tiene dentro</h2>
+
+    <p>El núcleo es un ESP8266 — el predecesor del ESP32, con WiFi 802.11 b/g/n en 2.4 GHz pero sin Bluetooth. La pantalla OLED muestra el menú del firmware Deauther, los botones físicos permiten navegar sin necesidad de tocar nada más, y la batería LiPo integrada se recarga por USB. La correa es estándar de 20 mm, compatible con cualquier correa de repuesto.</p>
+
+    <div class="spec-box">
+      <div class="spec-box-title"><i class="fa-solid fa-microchip"></i> Hardware</div>
+      <div class="spec-grid">
+        <div class="spec-item"><span class="spec-label">Chip</span><span class="spec-val">ESP8266 (160 MHz)</span></div>
+        <div class="spec-item"><span class="spec-label">WiFi</span><span class="spec-val">802.11 b/g/n 2.4 GHz</span></div>
+        <div class="spec-item"><span class="spec-label">Pantalla</span><span class="spec-val">OLED 0.96"</span></div>
+        <div class="spec-item"><span class="spec-label">Batería</span><span class="spec-val">LiPo recargable (USB)</span></div>
+        <div class="spec-item"><span class="spec-label">Botones</span><span class="spec-val">3 botones físicos</span></div>
+        <div class="spec-item"><span class="spec-label">Correa</span><span class="spec-val">20mm intercambiable</span></div>
+      </div>
+    </div>
+
+    <h2>Firmware y funciones</h2>
+
+    <p>El firmware DSTIKE corre el proyecto Deauther original. Las funciones principales: escaneo de redes WiFi cercanas (SSID, canal, potencia de señal, número de clientes), escaneo de dispositivos por MAC, ataque de deautenticación para desconectar clientes de una red específica, beacon spam para crear redes fantasma y un modo probee que satura peticiones de sonda.</p>
+
+    <p>También incluye un modo reloj funcional con hora, por si necesitas que realmente parezca un reloj cuando no lo estás usando para auditoría.</p>
+
+    <h2>ESP8266 vs ESP32: la limitación real</h2>
+
+    <p>El ESP8266 es un chip de generación anterior al ESP32. Eso significa que solo opera en 2.4 GHz, no tiene Bluetooth, y su potencia de procesamiento es menor. El ESP32 Marauder hace todo lo que hace el Deauther Watch y más — captura de handshakes, escaneo BLE, Evil Portal — con más potencia y pantalla más grande.</p>
+
+    <p>La ventaja del Deauther Watch no está en las funciones. Está en el form factor. Un reloj en la muñeca durante una evaluación de seguridad física pasa completamente desapercibido. Eso tiene valor en auditorías donde la discreción importa.</p>
+
+    <table class="comp-table">
+      <thead>
+        <tr><th>Dispositivo</th><th>Form factor</th><th>Deauth</th><th>Handshake</th><th>BLE scan</th><th>Precio</th></tr>
+      </thead>
+      <tbody>
+        <tr class="highlight">
+          <td>DSTIKE Deauther Watch</td>
+          <td>Reloj</td>
+          <td class="comp-check">Sí</td>
+          <td class="comp-x">No</td>
+          <td class="comp-x">No</td>
+          <td>$40–65</td>
+        </tr>
+        <tr>
+          <td>ESP32 Marauder</td>
+          <td>Handheld</td>
+          <td class="comp-check">Sí</td>
+          <td class="comp-check">Sí</td>
+          <td class="comp-check">Sí</td>
+          <td>$40–80</td>
+        </tr>
+        <tr>
+          <td>WiFi Pineapple</td>
+          <td>Router</td>
+          <td class="comp-check">Avanzado</td>
+          <td class="comp-check">Sí</td>
+          <td class="comp-x">No</td>
+          <td>$199</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>Si solo vas a tener un dispositivo para auditoría WiFi, el ESP32 Marauder es objetivamente más capaz. El Deauther Watch tiene sentido como segundo dispositivo para escenarios donde la discreción visual es un requerimiento, o para quien quiere explorar el mundo del pentesting WiFi en el form factor más inesperado posible.</p>
+
+    <div class="callout callout-warn">
+      <i class="fa-solid fa-triangle-exclamation"></i>
+      <strong>Uso ético obligatorio:</strong> Ejecutar ataques de deautenticación en redes ajenas interrumpe el servicio de otros usuarios y es ilegal. Este dispositivo es para auditar tu propia infraestructura o entornos con autorización documentada.
+    </div>
+
+  </article>
+
+  <div class="product-cta">
+    <div class="cta-info">
+      <div class="cta-label"><i class="fa-solid fa-store"></i> Disponible en HackPeru</div>
+      <div class="cta-product-name">DSTIKE Deauther Watch</div>
+      <div class="cta-price">~$40 – 65 USD · Envío a todo Perú</div>
+    </div>
+    <div class="cta-actions">
+      <a href="../index.html#productos" class="btn-store"><i class="fa-solid fa-microchip"></i> Ver en la tienda</a>
+      <a href="https://wa.me/51999999999?text=Hola%2C%20quiero%20el%20DSTIKE%20Deauther%20Watch.%20Vi%20el%20artículo%20del%20blog." target="_blank" rel="noopener" class="btn-wa-cta"><i class="fa-brands fa-whatsapp"></i> Consultar precio</a>
+    </div>
+  </div>
+
+  <div class="related-section">
+    <p class="related-title">// También te puede interesar</p>
+    <div class="related-grid">
+      <a href="esp32-marauder.html" class="related-card">
+        <div class="related-cat">WiFi · Pentesting</div>
+        <h4>ESP32 Marauder</h4>
+        <p>Auditor WiFi más completo</p>
+      </a>
+      <a href="flipper-zero.html" class="related-card">
+        <div class="related-cat">Multi-herramienta</div>
+        <h4>Flipper Zero</h4>
+        <p>RFID, NFC, Sub-GHz y más</p>
+      </a>
+      <a href="lilygo-t-embed.html" class="related-card">
+        <div class="related-cat">IoT</div>
+        <h4>LilyGO T-Embed</h4>
+        <p>ESP32 con pantalla y encoder</p>
+      </a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-mini">
+    <a href="../index.html" class="footer-logo"><i class="fa-solid fa-shield-halved"></i> HACKPERU</a>
+    <p>© 2026 HackPeru — Lima, Perú</p>
+    <a href="https://wa.me/51999999999" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> Contactar</a>
+  </div>
+</footer>
+<script>
+  const t=document.getElementById('menu-toggle'),m=document.getElementById('mobile-menu');
+  t.addEventListener('click',()=>{const o=m.style.display==='flex';m.style.display=o?'none':'flex';t.querySelector('i').className=o?'fa-solid fa-bars':'fa-solid fa-xmark';});
+</script>
+</body>
+</html>

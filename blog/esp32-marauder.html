@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ESP32 Marauder: el auditor WiFi que cabe en el bolsillo — HackPeru Blog</title>
+  <meta name="description" content="Review del ESP32 Marauder. Captura de handshakes WPA2, deauth, escaneo BLE y Evil Portal en un dispositivo de $50." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;600;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="blog.css" />
+</head>
+<body>
+
+<a id="wa-float" href="https://wa.me/51999999999?text=Hola%20HackPeru%20%F0%9F%91%8B%20Vi%20el%20artículo%20del%20ESP32%20Marauder%20y%20quiero%20información." target="_blank" rel="noopener">
+  <span class="pulse"></span><i class="fa-brands fa-whatsapp"></i>
+</a>
+
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="../index.html" class="nav-logo"><i class="fa-solid fa-shield-halved"></i><span>HACK<span style="color:#fff">PERU</span></span></a>
+    <ul class="nav-links">
+      <li><a href="../index.html#inicio">Inicio</a></li>
+      <li><a href="../index.html#productos">Productos</a></li>
+      <li><a href="../index.html#servicios">Asesoría</a></li>
+      <li><a href="../index.html#taller">Taller</a></li>
+      <li><a href="index.html" class="active">Blog</a></li>
+      <li><a href="https://wa.me/51999999999" target="_blank" rel="noopener" class="nav-wa"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a></li>
+    </ul>
+    <button id="menu-toggle"><i class="fa-solid fa-bars"></i></button>
+  </div>
+  <div id="mobile-menu">
+    <a href="../index.html">Inicio</a><a href="../index.html#productos">Productos</a>
+    <a href="../index.html#taller">Taller</a><a href="index.html">Blog</a>
+  </div>
+</nav>
+
+<header class="article-hero">
+  <div class="hero-inner">
+    <a href="index.html" class="back-link"><i class="fa-solid fa-arrow-left"></i> Volver al blog</a>
+    <span class="article-category cat-cyan"><i class="fa-solid fa-wifi"></i> WiFi Audit · Pentesting</span>
+    <h1 class="article-title">ESP32 Marauder: el auditor WiFi que cabe en el bolsillo</h1>
+    <div class="article-meta">
+      <span><i class="fa-regular fa-calendar"></i> 7 de noviembre, 2025</span>
+      <span><i class="fa-regular fa-clock"></i> 2 min de lectura</span>
+      <span><i class="fa-solid fa-tag"></i> WiFi, Bluetooth, ESP32, Pentesting</span>
+    </div>
+  </div>
+</header>
+
+<div class="article-wrap">
+  <article class="article-body">
+
+    <p>Auditar una red WiFi solía requerir una laptop con Kali Linux, una tarjeta de red específica y saber exactamente qué comandos correr. El ESP32 Marauder comprime buena parte de ese proceso en un dispositivo del tamaño de un teléfono antiguo, con batería, pantalla táctil y un menú tan directo que cualquier persona con nociones básicas puede usarlo.</p>
+
+    <p>Eso tiene ventajas obvias para quienes hacen auditorías. Y también es la razón por la que siempre hay que aclarar: esto es para revisar tus propias redes o redes en las que tienes autorización explícita. Punto.</p>
+
+    <h2>Qué hace en la práctica</h2>
+
+    <p><strong>Captura de handshakes WPA2:</strong> El flujo básico de una auditoría de contraseñas WiFi. El Marauder escanea redes cercanas, envía paquetes de deautenticación a clientes conectados (forzando una reconexión) y captura el handshake resultante en un archivo PCAP almacenado en la tarjeta SD. Ese archivo lo procesas luego en Hashcat o Aircrack para intentar la contraseña.</p>
+
+    <p><strong>Escaneo BLE:</strong> Lista dispositivos Bluetooth Low Energy activos en el área: auriculares, rastreadores, wearables, sensores. Útil para hacer inventario de dispositivos en un entorno.</p>
+
+    <p><strong>Evil Portal:</strong> Despliega un punto de acceso falso con portal cautivo personalizable. La herramienta clásica para auditar si los usuarios de una red caen en portales falsos.</p>
+
+    <p><strong>Beacon spam:</strong> Genera decenas de SSIDs falsos en el área. En pentesting se usa para evaluar cómo responden usuarios y sistemas de detección de intrusiones ante redes fantasma.</p>
+
+    <div class="spec-box">
+      <div class="spec-box-title"><i class="fa-solid fa-microchip"></i> Especificaciones</div>
+      <div class="spec-grid">
+        <div class="spec-item"><span class="spec-label">Chip</span><span class="spec-val">ESP32 (dual-core 240 MHz)</span></div>
+        <div class="spec-item"><span class="spec-label">WiFi</span><span class="spec-val">802.11 b/g/n 2.4 GHz</span></div>
+        <div class="spec-item"><span class="spec-label">Bluetooth</span><span class="spec-val">BLE 4.2</span></div>
+        <div class="spec-item"><span class="spec-label">Pantalla</span><span class="spec-val">TFT 2.4" / 3.2" táctil</span></div>
+        <div class="spec-item"><span class="spec-label">Almacenamiento</span><span class="spec-val">MicroSD (hasta 32 GB)</span></div>
+        <div class="spec-item"><span class="spec-label">Carga</span><span class="spec-val">USB-C o micro USB</span></div>
+      </div>
+    </div>
+
+    <h2>Limitaciones reales</h2>
+
+    <p>El Marauder solo trabaja en 2.4 GHz. Las redes modernas en 5 GHz están fuera de su alcance, lo que en entornos corporativos puede ser un problema serio ya que gran parte del tráfico crítico está en esa banda. Para 5 GHz necesitas una laptop con adaptador compatible.</p>
+
+    <p>También hay que entender que capturar un handshake no significa tener la contraseña. Eso depende del diccionario que uses para el ataque y de qué tan buena sea la contraseña de la red. Una contraseña de doce caracteres aleatorios puede tardar meses o años en crackearse.</p>
+
+    <h2>Comparado con otras opciones</h2>
+
+    <table class="comp-table">
+      <thead>
+        <tr><th>Herramienta</th><th>Handshake</th><th>BLE scan</th><th>Evil Portal</th><th>5 GHz</th><th>Precio</th></tr>
+      </thead>
+      <tbody>
+        <tr class="highlight">
+          <td>ESP32 Marauder</td>
+          <td class="comp-check">Sí</td>
+          <td class="comp-check">Sí</td>
+          <td class="comp-check">Sí</td>
+          <td class="comp-x">No</td>
+          <td>$40–80</td>
+        </tr>
+        <tr>
+          <td>WiFi Pineapple Mark VII</td>
+          <td class="comp-check">Sí</td>
+          <td class="comp-x">No</td>
+          <td class="comp-check">Avanzado</td>
+          <td class="comp-check">Sí</td>
+          <td>$199</td>
+        </tr>
+        <tr>
+          <td>Pwnagotchi</td>
+          <td class="comp-check">Solo WPA</td>
+          <td class="comp-x">No</td>
+          <td class="comp-x">No</td>
+          <td class="comp-x">No</td>
+          <td>$50–80</td>
+        </tr>
+        <tr>
+          <td>Laptop + Kali</td>
+          <td class="comp-check">Completo</td>
+          <td class="comp-check">Sí</td>
+          <td class="comp-check">Sí</td>
+          <td class="comp-check">Con adaptador</td>
+          <td>$200+</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>El WiFi Pineapple es más potente para ataques MITM y tiene soporte de doble banda, pero cuesta $200 y se nota que llevas algo en la mano. El Marauder gana en portabilidad, precio y versatilidad para tareas de auditoría básicas a intermedias. El Pwnagotchi es más especializado — solo captura handshakes WPA pasivamente, sin pantalla interactiva ni otras funciones.</p>
+
+    <div class="callout callout-warn">
+      <i class="fa-solid fa-triangle-exclamation"></i>
+      <strong>Recuerda:</strong> Los ataques de deautenticación, Evil Portal y captura de tráfico en redes sin autorización son delitos informáticos en Perú (Ley 30096) y en la mayoría de países. Usa estas herramientas solo en redes propias o con permiso explícito.
+    </div>
+
+  </article>
+
+  <div class="product-cta">
+    <div class="cta-info">
+      <div class="cta-label"><i class="fa-solid fa-store"></i> Disponible en HackPeru</div>
+      <div class="cta-product-name">ESP32 Marauder</div>
+      <div class="cta-price">~$40 – 80 USD · Con tarjeta SD incluida</div>
+    </div>
+    <div class="cta-actions">
+      <a href="../index.html#productos" class="btn-store"><i class="fa-solid fa-microchip"></i> Ver en la tienda</a>
+      <a href="https://wa.me/51999999999?text=Hola%2C%20quiero%20el%20ESP32%20Marauder.%20Vi%20el%20artículo%20del%20blog." target="_blank" rel="noopener" class="btn-wa-cta"><i class="fa-brands fa-whatsapp"></i> Consultar precio</a>
+    </div>
+  </div>
+
+  <div class="related-section">
+    <p class="related-title">// También te puede interesar</p>
+    <div class="related-grid">
+      <a href="flipper-zero.html" class="related-card">
+        <div class="related-cat">Multi-herramienta</div>
+        <h4>Flipper Zero</h4>
+        <p>RFID, NFC, Sub-GHz y más</p>
+      </a>
+      <a href="dstike-deauther.html" class="related-card">
+        <div class="related-cat">WiFi · Wearable</div>
+        <h4>DSTIKE Deauther Watch</h4>
+        <p>Auditoría WiFi desde la muñeca</p>
+      </a>
+      <a href="hackrf-portapack.html" class="related-card">
+        <div class="related-cat">SDR</div>
+        <h4>HackRF One + Portapack</h4>
+        <p>Análisis de espectro completo</p>
+      </a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-mini">
+    <a href="../index.html" class="footer-logo"><i class="fa-solid fa-shield-halved"></i> HACKPERU</a>
+    <p>© 2026 HackPeru — Lima, Perú</p>
+    <a href="https://wa.me/51999999999" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> Contactar</a>
+  </div>
+</footer>
+<script>
+  const t=document.getElementById('menu-toggle'),m=document.getElementById('mobile-menu');
+  t.addEventListener('click',()=>{const o=m.style.display==='flex';m.style.display=o?'none':'flex';t.querySelector('i').className=o?'fa-solid fa-bars':'fa-solid fa-xmark';});
+</script>
+</body>
+</html>

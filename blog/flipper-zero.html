@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Flipper Zero: más allá del hype — HackPeru Blog</title>
+  <meta name="description" content="Review honesta del Flipper Zero. Para qué sirve realmente, qué no puede hacer y cómo se compara con alternativas más baratas o más potentes." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;600;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="blog.css" />
+</head>
+<body>
+
+<a id="wa-float" href="https://wa.me/51999999999?text=Hola%20HackPeru%20%F0%9F%91%8B%20Vi%20el%20artículo%20del%20Flipper%20Zero%20y%20quiero%20información." target="_blank" rel="noopener">
+  <span class="pulse"></span><i class="fa-brands fa-whatsapp"></i>
+</a>
+
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="../index.html" class="nav-logo"><i class="fa-solid fa-shield-halved"></i><span>HACK<span style="color:#fff">PERU</span></span></a>
+    <ul class="nav-links">
+      <li><a href="../index.html#inicio">Inicio</a></li>
+      <li><a href="../index.html#productos">Productos</a></li>
+      <li><a href="../index.html#servicios">Asesoría</a></li>
+      <li><a href="../index.html#taller">Taller</a></li>
+      <li><a href="index.html" class="active">Blog</a></li>
+      <li><a href="https://wa.me/51999999999" target="_blank" rel="noopener" class="nav-wa"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a></li>
+    </ul>
+    <button id="menu-toggle"><i class="fa-solid fa-bars"></i></button>
+  </div>
+  <div id="mobile-menu">
+    <a href="../index.html">Inicio</a><a href="../index.html#productos">Productos</a>
+    <a href="../index.html#taller">Taller</a><a href="index.html">Blog</a>
+  </div>
+</nav>
+
+<header class="article-hero">
+  <div class="hero-inner">
+    <a href="index.html" class="back-link"><i class="fa-solid fa-arrow-left"></i> Volver al blog</a>
+    <span class="article-category cat-green"><i class="fa-solid fa-shield-halved"></i> Pentesting · Multi-herramienta</span>
+    <h1 class="article-title">Flipper Zero: más allá del hype, ¿para qué sirve en realidad?</h1>
+    <div class="article-meta">
+      <span><i class="fa-regular fa-calendar"></i> 15 de octubre, 2025</span>
+      <span><i class="fa-regular fa-clock"></i> 2 min de lectura</span>
+      <span><i class="fa-solid fa-tag"></i> RFID, NFC, Sub-GHz, BadUSB</span>
+    </div>
+  </div>
+</header>
+
+<div class="article-wrap">
+  <article class="article-body">
+
+    <p>La primera vez que pasé el Flipper cerca de la tarjeta RFID de una oficina y la clonó en dos segundos, entendí por qué este dispositivo genera tanto ruido. Y también entendí por qué tanta gente lo compra sin saber bien qué va a hacer con él.</p>
+
+    <p>El Flipper Zero es un multiherramienta de seguridad con pantalla y forma de tamagotchi. Leer eso puede sonar a gadget de nicho caro, pero la realidad es que consolida en un solo dispositivo cosas que antes requerían cuatro o cinco herramientas separadas — cada una con su propio software, cable y curva de aprendizaje.</p>
+
+    <h2>Qué puede hacer (y qué no)</h2>
+
+    <p><strong>Sub-GHz (300–928 MHz):</strong> Captura y reproduce señales de controles remotos, garajes, sensores inalámbricos y muchos sistemas de alarma antiguos. El rango es enorme, pero hay una curva de aprendizaje real para entender qué frecuencias usar con qué protocolos. No funciona con rolling codes modernos sin módulo adicional.</p>
+
+    <p><strong>RFID (125 kHz):</strong> Lee y clona tarjetas EM4100, HID Prox y formatos compatibles. Es donde el Flipper brilla más consistentemente: funciona casi siempre, sin configuración adicional.</p>
+
+    <p><strong>NFC (13.56 MHz):</strong> Lee tarjetas Mifare Classic, NTAG y varios otros estándares. No puede clonar tarjetas con UID bloqueado, pero para la mayoría de tarjetas de control de acceso básicas funciona sin problema.</p>
+
+    <p><strong>Infrarrojo:</strong> Universal. Puede aprender cualquier control remoto IR y reproducirlo. En la práctica lo terminas usando para trollear televisores en cafés más que para pentesting serio, pero es genuinamente útil.</p>
+
+    <p><strong>BadUSB:</strong> Se conecta como teclado HID a cualquier computadora y ejecuta scripts. Útil para auditorías de acceso físico — si alguien puede conectar algo a un puerto USB de tu empresa sin que nadie lo note, tienes un problema.</p>
+
+    <div class="spec-box">
+      <div class="spec-box-title"><i class="fa-solid fa-microchip"></i> Módulos de comunicación</div>
+      <div class="spec-grid">
+        <div class="spec-item"><span class="spec-label">Sub-GHz</span><span class="spec-val">300–928 MHz (CC1101)</span></div>
+        <div class="spec-item"><span class="spec-label">RFID</span><span class="spec-val">125 kHz (EM, HID, Indala)</span></div>
+        <div class="spec-item"><span class="spec-label">NFC</span><span class="spec-val">13.56 MHz (Mifare, NTAG)</span></div>
+        <div class="spec-item"><span class="spec-label">Infrarrojo</span><span class="spec-val">RX + TX integrados</span></div>
+        <div class="spec-item"><span class="spec-label">Bluetooth</span><span class="spec-val">BLE (emulación HID)</span></div>
+        <div class="spec-item"><span class="spec-label">GPIO</span><span class="spec-val">SPI, I2C, UART, 1-Wire</span></div>
+      </div>
+    </div>
+
+    <h2>Comparativa honesta</h2>
+
+    <table class="comp-table">
+      <thead>
+        <tr><th>Herramienta</th><th>Sub-GHz</th><th>RFID</th><th>NFC</th><th>IR</th><th>Precio</th></tr>
+      </thead>
+      <tbody>
+        <tr class="highlight">
+          <td>Flipper Zero</td>
+          <td class="comp-check">Sí</td>
+          <td class="comp-check">Sí</td>
+          <td class="comp-check">Sí</td>
+          <td class="comp-check">Sí</td>
+          <td>$169–200</td>
+        </tr>
+        <tr>
+          <td>Proxmark3 RDV4</td>
+          <td class="comp-x">No</td>
+          <td class="comp-check">Superior</td>
+          <td class="comp-check">Superior</td>
+          <td class="comp-x">No</td>
+          <td>$300+</td>
+        </tr>
+        <tr>
+          <td>HackRF One</td>
+          <td class="comp-check">1MHz–6GHz</td>
+          <td class="comp-x">No</td>
+          <td class="comp-x">No</td>
+          <td class="comp-x">No</td>
+          <td>$120–180</td>
+        </tr>
+        <tr>
+          <td>Tools por separado</td>
+          <td class="comp-warn">Varios</td>
+          <td class="comp-check">Sí</td>
+          <td class="comp-check">Sí</td>
+          <td class="comp-check">Sí</td>
+          <td>$250+</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>El Proxmark3 es superior para RFID/NFC en profundidad — si tu trabajo gira en torno a romper sistemas de control de acceso avanzados, lo necesitas. El Flipper no llega a ese nivel. Pero para un profesional de seguridad que necesita una herramienta portátil de uso general sin llevar cuatro dispositivos distintos, el Flipper es la opción más práctica del mercado a ese precio.</p>
+
+    <div class="callout">
+      <i class="fa-solid fa-info-circle"></i>
+      <strong>Firmware Unleashed / RogueMaster:</strong> El firmware de terceros más popular expande significativamente las capacidades Sub-GHz y agrega protocolos adicionales. La mayoría de usuarios lo instala en los primeros días.
+    </div>
+
+    <p>El único punto débil real es el precio. A $169–200 no es un impulso de compra, es una decisión. Si lo vas a usar solo para controlar televisores con infrarrojos, es demasiado. Si vas a trabajar con sistemas de control de acceso, entornos IoT o simplemente quieres explorar el espectro RF en tu entorno, cada dólar tiene sentido.</p>
+
+  </article>
+
+  <div class="product-cta">
+    <div class="cta-info">
+      <div class="cta-label"><i class="fa-solid fa-store"></i> Disponible en HackPeru</div>
+      <div class="cta-product-name">Flipper Zero</div>
+      <div class="cta-price">~$169 – 200 USD · Stock limitado · Envío nacional</div>
+    </div>
+    <div class="cta-actions">
+      <a href="../index.html#productos" class="btn-store"><i class="fa-solid fa-microchip"></i> Ver en la tienda</a>
+      <a href="https://wa.me/51999999999?text=Hola%2C%20quiero%20el%20Flipper%20Zero.%20Vi%20el%20artículo%20del%20blog." target="_blank" rel="noopener" class="btn-wa-cta"><i class="fa-brands fa-whatsapp"></i> Consultar precio</a>
+    </div>
+  </div>
+
+  <div class="related-section">
+    <p class="related-title">// También te puede interesar</p>
+    <div class="related-grid">
+      <a href="esp32-marauder.html" class="related-card">
+        <div class="related-cat">WiFi · Pentesting</div>
+        <h4>ESP32 Marauder</h4>
+        <p>Auditoría WiFi desde el bolsillo</p>
+      </a>
+      <a href="hackrf-portapack.html" class="related-card">
+        <div class="related-cat">SDR · Radio</div>
+        <h4>HackRF One + Portapack</h4>
+        <p>Análisis de espectro 1MHz–6GHz</p>
+      </a>
+      <a href="dstike-deauther.html" class="related-card">
+        <div class="related-cat">WiFi · Wearable</div>
+        <h4>DSTIKE Deauther Watch</h4>
+        <p>Auditoría WiFi desde la muñeca</p>
+      </a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-mini">
+    <a href="../index.html" class="footer-logo"><i class="fa-solid fa-shield-halved"></i> HACKPERU</a>
+    <p>© 2026 HackPeru — Lima, Perú</p>
+    <a href="https://wa.me/51999999999" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> Contactar</a>
+  </div>
+</footer>
+<script>
+  const t=document.getElementById('menu-toggle'),m=document.getElementById('mobile-menu');
+  t.addEventListener('click',()=>{const o=m.style.display==='flex';m.style.display=o?'none':'flex';t.querySelector('i').className=o?'fa-solid fa-bars':'fa-solid fa-xmark';});
+</script>
+</body>
+</html>

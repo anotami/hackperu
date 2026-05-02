@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HackRF One + Portapack: SDR portátil de verdad — HackPeru Blog</title>
+  <meta name="description" content="Review del HackRF One con Portapack H2. SDR portátil de 1 MHz a 6 GHz. Qué puede hacer, qué no, y cómo se compara con RTL-SDR y LimeSDR." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;600;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="blog.css" />
+</head>
+<body>
+
+<a id="wa-float" href="https://wa.me/51999999999?text=Hola%20HackPeru%20%F0%9F%91%8B%20Vi%20el%20artículo%20del%20HackRF%20One%20y%20quiero%20información." target="_blank" rel="noopener">
+  <span class="pulse"></span><i class="fa-brands fa-whatsapp"></i>
+</a>
+
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="../index.html" class="nav-logo"><i class="fa-solid fa-shield-halved"></i><span>HACK<span style="color:#fff">PERU</span></span></a>
+    <ul class="nav-links">
+      <li><a href="../index.html#inicio">Inicio</a></li>
+      <li><a href="../index.html#productos">Productos</a></li>
+      <li><a href="../index.html#servicios">Asesoría</a></li>
+      <li><a href="../index.html#taller">Taller</a></li>
+      <li><a href="index.html" class="active">Blog</a></li>
+      <li><a href="https://wa.me/51999999999" target="_blank" rel="noopener" class="nav-wa"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a></li>
+    </ul>
+    <button id="menu-toggle"><i class="fa-solid fa-bars"></i></button>
+  </div>
+  <div id="mobile-menu">
+    <a href="../index.html">Inicio</a><a href="../index.html#productos">Productos</a>
+    <a href="../index.html#taller">Taller</a><a href="index.html">Blog</a>
+  </div>
+</nav>
+
+<header class="article-hero">
+  <div class="hero-inner">
+    <a href="index.html" class="back-link"><i class="fa-solid fa-arrow-left"></i> Volver al blog</a>
+    <span class="article-category cat-green"><i class="fa-solid fa-satellite-dish"></i> SDR · Radio Definida por Software</span>
+    <h1 class="article-title">HackRF One + Portapack: SDR portátil de verdad</h1>
+    <div class="article-meta">
+      <span><i class="fa-regular fa-calendar"></i> 12 de enero, 2026</span>
+      <span><i class="fa-regular fa-clock"></i> 2 min de lectura</span>
+      <span><i class="fa-solid fa-tag"></i> SDR, Radio, Espectro, RF, HackRF</span>
+    </div>
+  </div>
+</header>
+
+<div class="article-wrap">
+  <article class="article-body">
+
+    <p>Casi toda la comunicación inalámbrica que te rodea — WiFi, Bluetooth, walkie-talkies, señales de aviones, controles remotos, sistemas de telemetría — viaja por el aire en forma de ondas de radio. Técnicamente, todo eso es audible si tienes el receptor adecuado. El HackRF One con Portapack H2 te da acceso a ese espectro completo, desde 1 MHz hasta 6 GHz, en un dispositivo que cabe en el bolsillo del pantalón.</p>
+
+    <h2>HackRF One: la base</h2>
+
+    <p>El HackRF One es un SDR (Software Defined Radio) de código abierto desarrollado por Great Scott Gadgets. A diferencia de los receptores RTL-SDR que solo escuchan, el HackRF puede transmitir también — lo que lo convierte en una herramienta mucho más versátil para investigación y pruebas. Normalmente se usa conectado a una computadora con software como GNU Radio, SDR#, o GQRX.</p>
+
+    <h2>El Portapack H2: la diferencia real</h2>
+
+    <p>El Portapack es una pantalla táctil con batería que se acopla al HackRF y lo convierte en un dispositivo completamente autónomo. Ya no necesitas laptop. Corres el firmware Mayhem (el más popular) y tienes desde el menú un analizador de espectro, receptor FM, decodificador de ADS-B para vuelos, receptor POCSAG (paginadores), transmisor de señales varias y mucho más.</p>
+
+    <p>La pantalla táctil de 2.4 pulgadas no es enorme, pero suficiente para navegar menús y ver el espectro en tiempo real mientras caminas. La batería dura entre dos y cuatro horas según el uso.</p>
+
+    <div class="spec-box">
+      <div class="spec-box-title"><i class="fa-solid fa-microchip"></i> HackRF One — especificaciones clave</div>
+      <div class="spec-grid">
+        <div class="spec-item"><span class="spec-label">Rango de frecuencia</span><span class="spec-val">1 MHz – 6 GHz</span></div>
+        <div class="spec-item"><span class="spec-label">Modos</span><span class="spec-val">RX y TX half-duplex</span></div>
+        <div class="spec-item"><span class="spec-label">Ancho de banda</span><span class="spec-val">hasta 20 MHz</span></div>
+        <div class="spec-item"><span class="spec-label">ADC/DAC</span><span class="spec-val">8 bits</span></div>
+        <div class="spec-item"><span class="spec-label">Interfaz</span><span class="spec-val">USB 2.0 (High Speed)</span></div>
+        <div class="spec-item"><span class="spec-label">Antena</span><span class="spec-val">SMA hembra</span></div>
+      </div>
+    </div>
+
+    <h2>¿Qué se puede hacer con él?</h2>
+
+    <p>La lista es larga. Recibir señales ADS-B de vuelos y visualizar su posición en tiempo real. Escuchar comunicaciones de aviación civil (AM). Decodificar mensajes de paginadores POCSAG. Analizar señales desconocidas para identificar protocolo y modulación. Recibir imágenes NOAA de satélites meteorológicos con la antena adecuada. Estudiar cómo funcionan los protocolos de control remoto y sistemas de telemetría.</p>
+
+    <p>Y sí, también puede transmitir. Lo que hay que entender claramente: transmitir en frecuencias sin licencia o interferir comunicaciones existentes es ilegal en cualquier país. El HackRF se usa para investigación, aprendizaje y auditorías de sistemas propios.</p>
+
+    <h2>Comparativa con otras opciones SDR</h2>
+
+    <table class="comp-table">
+      <thead>
+        <tr><th>Dispositivo</th><th>Rango</th><th>TX</th><th>Portátil</th><th>Precio</th></tr>
+      </thead>
+      <tbody>
+        <tr class="highlight">
+          <td>HackRF One + Portapack H2</td>
+          <td>1 MHz – 6 GHz</td>
+          <td class="comp-check">Sí</td>
+          <td class="comp-check">Sí (autónomo)</td>
+          <td>$120–180</td>
+        </tr>
+        <tr>
+          <td>RTL-SDR v4</td>
+          <td>500 kHz – 1.75 GHz</td>
+          <td class="comp-x">No</td>
+          <td class="comp-warn">Requiere laptop</td>
+          <td>$25–35</td>
+        </tr>
+        <tr>
+          <td>ADALM-Pluto</td>
+          <td>325 MHz – 3.8 GHz</td>
+          <td class="comp-check">Sí (full duplex)</td>
+          <td class="comp-warn">Requiere laptop</td>
+          <td>$100–150</td>
+        </tr>
+        <tr>
+          <td>LimeSDR Mini 2</td>
+          <td>10 MHz – 3.5 GHz</td>
+          <td class="comp-check">Sí (full duplex)</td>
+          <td class="comp-warn">Requiere laptop</td>
+          <td>$180–220</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>El RTL-SDR cuesta ocho veces menos y para recepción básica hace el 80% de lo que necesita la mayoría de usuarios. Si solo quieres escuchar vuelos, radios y decodificar señales desde la computadora, empieza por ahí. El HackRF con Portapack justifica su precio cuando necesitas transmitir, cuando quieres operar sin laptop, o cuando el rango de frecuencias del RTL no es suficiente.</p>
+
+    <div class="callout callout-warn">
+      <i class="fa-solid fa-triangle-exclamation"></i>
+      <strong>Advertencia:</strong> El HackRF One puede transmitir señales de radio. Hacerlo en frecuencias licenciadas, interferir comunicaciones existentes o usar el dispositivo sin la habilitación correspondiente es un delito. El uso legal es en bandas ISM, para investigación con equipos propios, o con licencia de radioaficionado.
+    </div>
+
+  </article>
+
+  <div class="product-cta">
+    <div class="cta-info">
+      <div class="cta-label"><i class="fa-solid fa-store"></i> Disponible en HackPeru</div>
+      <div class="cta-product-name">HackRF One + Portapack H2</div>
+      <div class="cta-price">~$120 – 180 USD · Con antena incluida</div>
+    </div>
+    <div class="cta-actions">
+      <a href="../index.html#productos" class="btn-store"><i class="fa-solid fa-microchip"></i> Ver en la tienda</a>
+      <a href="https://wa.me/51999999999?text=Hola%2C%20quiero%20el%20HackRF%20One%20con%20Portapack.%20Vi%20el%20artículo%20del%20blog." target="_blank" rel="noopener" class="btn-wa-cta"><i class="fa-brands fa-whatsapp"></i> Consultar precio</a>
+    </div>
+  </div>
+
+  <div class="related-section">
+    <p class="related-title">// También te puede interesar</p>
+    <div class="related-grid">
+      <a href="flipper-zero.html" class="related-card">
+        <div class="related-cat">Multi-herramienta</div>
+        <h4>Flipper Zero</h4>
+        <p>Sub-GHz, RFID, NFC e IR</p>
+      </a>
+      <a href="quansheng-uv-k5.html" class="related-card">
+        <div class="related-cat">Radio</div>
+        <h4>Quansheng UV-K5</h4>
+        <p>Walkie-talkie con firmware extendido</p>
+      </a>
+      <a href="heltec-lora-32.html" class="related-card">
+        <div class="related-cat">LoRa</div>
+        <h4>Heltec LoRa 32 V3</h4>
+        <p>Red de comunicación sin internet</p>
+      </a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-mini">
+    <a href="../index.html" class="footer-logo"><i class="fa-solid fa-shield-halved"></i> HACKPERU</a>
+    <p>© 2026 HackPeru — Lima, Perú</p>
+    <a href="https://wa.me/51999999999" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> Contactar</a>
+  </div>
+</footer>
+<script>
+  const t=document.getElementById('menu-toggle'),m=document.getElementById('mobile-menu');
+  t.addEventListener('click',()=>{const o=m.style.display==='flex';m.style.display=o?'none':'flex';t.querySelector('i').className=o?'fa-solid fa-bars':'fa-solid fa-xmark';});
+</script>
+</body>
+</html>

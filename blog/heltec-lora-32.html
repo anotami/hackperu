@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Heltec LoRa 32 V3: construye tu red sin internet — HackPeru Blog</title>
+  <meta name="description" content="Review del Heltec LoRa 32 V3 para Meshtastic. Especificaciones, comparativa con T-Beam y RAK Wireless, y por qué es el mejor punto de entrada a LoRa." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;600;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="blog.css" />
+</head>
+<body>
+
+<a id="wa-float" href="https://wa.me/51999999999?text=Hola%20HackPeru%20%F0%9F%91%8B%20Vi%20el%20artículo%20del%20Heltec%20LoRa%2032%20y%20quiero%20información." target="_blank" rel="noopener">
+  <span class="pulse"></span><i class="fa-brands fa-whatsapp"></i>
+</a>
+
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="../index.html" class="nav-logo"><i class="fa-solid fa-shield-halved"></i><span>HACK<span style="color:#fff">PERU</span></span></a>
+    <ul class="nav-links">
+      <li><a href="../index.html#inicio">Inicio</a></li>
+      <li><a href="../index.html#productos">Productos</a></li>
+      <li><a href="../index.html#servicios">Asesoría</a></li>
+      <li><a href="../index.html#taller">Taller</a></li>
+      <li><a href="index.html" class="active">Blog</a></li>
+      <li><a href="https://wa.me/51999999999" target="_blank" rel="noopener" class="nav-wa"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a></li>
+    </ul>
+    <button id="menu-toggle"><i class="fa-solid fa-bars"></i></button>
+  </div>
+  <div id="mobile-menu">
+    <a href="../index.html">Inicio</a><a href="../index.html#productos">Productos</a>
+    <a href="../index.html#taller">Taller</a><a href="index.html">Blog</a>
+  </div>
+</nav>
+
+<header class="article-hero">
+  <div class="hero-inner">
+    <a href="index.html" class="back-link"><i class="fa-solid fa-arrow-left"></i> Volver al blog</a>
+    <span class="article-category cat-purple"><i class="fa-solid fa-tower-broadcast"></i> LoRa · Meshtastic</span>
+    <h1 class="article-title">Heltec LoRa 32 V3: construye tu red de comunicación sin internet</h1>
+    <div class="article-meta">
+      <span><i class="fa-regular fa-calendar"></i> 8 de septiembre, 2025</span>
+      <span><i class="fa-regular fa-clock"></i> 2 min de lectura</span>
+      <span><i class="fa-solid fa-tag"></i> LoRa, Meshtastic, ESP32</span>
+    </div>
+  </div>
+</header>
+
+<div class="article-wrap">
+  <article class="article-body">
+
+    <p>Hay una idea que suena casi futurista hasta que la ves en acción: enviar mensajes a 15 kilómetros sin usar internet, sin señal de celular y sin pagar absolutamente nada por el servicio. Con el Heltec LoRa 32 V3 y un firmware llamado Meshtastic, eso es exactamente lo que puedes hacer. Y el módulo cuesta menos de 25 dólares.</p>
+
+    <p>Este módulo lleva meses siendo la elección dominante para armar nodos Meshtastic en Latinoamérica. No es el más bonito, no viene con carcasa, pero tiene la combinación correcta de precio, rendimiento y documentación.</p>
+
+    <h2>¿Qué trae dentro?</h2>
+
+    <p>El V3 usa un ESP32-S3 — el sucesor del ESP32 original — combinado con un módulo de radio LoRa SX1262. El SX1262 es un salto considerable sobre el SX1276 que traían versiones anteriores: mejor sensibilidad de recepción, menor consumo en standby y soporte para LoRa 2.0. En la práctica eso se traduce en mayor alcance con la misma antena, y menos batería gastada cuando el nodo está esperando mensajes.</p>
+
+    <p>También tiene una pequeña pantalla OLED integrada. Suena trivial, pero cuando estás en campo sin teléfono cerca, ver el estado del nodo, los mensajes entrantes y la señal de red directamente en el dispositivo hace una diferencia real.</p>
+
+    <div class="spec-box">
+      <div class="spec-box-title"><i class="fa-solid fa-microchip"></i> Especificaciones clave</div>
+      <div class="spec-grid">
+        <div class="spec-item"><span class="spec-label">Chip principal</span><span class="spec-val">ESP32-S3</span></div>
+        <div class="spec-item"><span class="spec-label">Módulo LoRa</span><span class="spec-val">SX1262</span></div>
+        <div class="spec-item"><span class="spec-label">Frecuencia</span><span class="spec-val">868 / 915 MHz</span></div>
+        <div class="spec-item"><span class="spec-label">Sensibilidad RX</span><span class="spec-val">hasta -148 dBm</span></div>
+        <div class="spec-item"><span class="spec-label">Potencia TX</span><span class="spec-val">hasta +22 dBm</span></div>
+        <div class="spec-item"><span class="spec-label">Pantalla</span><span class="spec-val">OLED 0.96"</span></div>
+        <div class="spec-item"><span class="spec-label">Conector antena</span><span class="spec-val">SMA hembra</span></div>
+        <div class="spec-item"><span class="spec-label">USB</span><span class="spec-val">Type-C</span></div>
+      </div>
+    </div>
+
+    <h2>Meshtastic: el firmware que lo convierte en comunicador</h2>
+
+    <p>Flashear Meshtastic en el Heltec toma menos de diez minutos desde el navegador, sin instalar nada. El firmware convierte el módulo en un nodo de red mesh: los mensajes rebotan de nodo en nodo hasta llegar al destino, sin servidor central, sin cuenta registrada, sin suscripción.</p>
+
+    <p>Casos de uso concretos: coordinación en excursiones a zonas sin cobertura celular, comunicación en eventos masivos donde las redes colapsan, preparación ante desastres naturales, o simplemente armar una red privada con amigos. Cada nodo repite los mensajes de los demás, así que mientras más nodos haya en el área, mejor funciona la red.</p>
+
+    <div class="callout">
+      <i class="fa-solid fa-info-circle"></i>
+      <strong>Dato útil:</strong> En Lima, ya existen nodos Meshtastic activos en varios puntos de la ciudad. Con un solo módulo puedes conectarte a esa red sin configurar absolutamente nada más.
+    </div>
+
+    <h2>Comparativa con alternativas</h2>
+
+    <table class="comp-table">
+      <thead>
+        <tr>
+          <th>Dispositivo</th>
+          <th>Chip LoRa</th>
+          <th>GPS</th>
+          <th>Batería</th>
+          <th>Precio</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="highlight">
+          <td>Heltec LoRa 32 V3</td>
+          <td>SX1262</td>
+          <td class="comp-x">No</td>
+          <td class="comp-warn">Externa</td>
+          <td>$15–25</td>
+        </tr>
+        <tr>
+          <td>LilyGO T-Beam</td>
+          <td>SX1276/1262</td>
+          <td class="comp-check">Sí</td>
+          <td class="comp-check">18650 integrado</td>
+          <td>$35–55</td>
+        </tr>
+        <tr>
+          <td>RAK Wireless 4631</td>
+          <td>SX1262</td>
+          <td class="comp-check">Opcional</td>
+          <td class="comp-check">Sí</td>
+          <td>$35–70</td>
+        </tr>
+        <tr>
+          <td>Heltec V2 (anterior)</td>
+          <td>SX1276</td>
+          <td class="comp-x">No</td>
+          <td class="comp-warn">Externa</td>
+          <td>$10–18</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>El T-Beam es mejor si quieres GPS integrado y batería 18650 recargable en la misma placa. Pero cuesta el doble. El RAK Wireless es excelente hardware orientado a despliegues industriales, con precio acorde. Para el que quiere armar tres o cuatro nodos sin gastar demasiado, el Heltec V3 gana sin discusión.</p>
+
+    <p>El único punto que hay que considerar: necesitas soldar una antena y construirte una carcasa si lo vas a usar fuera del escritorio. No es complicado, pero requiere algo de tiempo. En nuestro taller te mostramos cómo hacerlo.</p>
+
+    <div class="callout callout-warn">
+      <i class="fa-solid fa-triangle-exclamation"></i>
+      <strong>Nota legal:</strong> Los dispositivos LoRa deben operar en las frecuencias autorizadas por Osiptel en Perú (915 MHz para ISM). Para despliegues comerciales o gubernamentales, consulta la regulación vigente.
+    </div>
+
+  </article>
+
+  <div class="product-cta">
+    <div class="cta-info">
+      <div class="cta-label"><i class="fa-solid fa-store"></i> Disponible en HackPeru</div>
+      <div class="cta-product-name">Heltec LoRa 32 V3</div>
+      <div class="cta-price">~$15 – 25 USD · Envío a todo Perú</div>
+    </div>
+    <div class="cta-actions">
+      <a href="../index.html#productos" class="btn-store"><i class="fa-solid fa-microchip"></i> Ver en la tienda</a>
+      <a href="https://wa.me/51999999999?text=Hola%2C%20quiero%20el%20Heltec%20LoRa%2032%20V3.%20Vi%20el%20artículo%20del%20blog." target="_blank" rel="noopener" class="btn-wa-cta"><i class="fa-brands fa-whatsapp"></i> Consultar precio</a>
+    </div>
+  </div>
+
+  <div class="related-section">
+    <p class="related-title">// También te puede interesar</p>
+    <div class="related-grid">
+      <a href="lilygo-t-deck.html" class="related-card">
+        <div class="related-cat">LoRa · Comms</div>
+        <h4>LilyGO T-Deck</h4>
+        <p>Nodo LoRa con teclado y pantalla táctil</p>
+      </a>
+      <a href="quansheng-uv-k5.html" class="related-card">
+        <div class="related-cat">Radio</div>
+        <h4>Quansheng UV-K5</h4>
+        <p>El walkie-talkie con firmware abierto</p>
+      </a>
+      <a href="hackrf-portapack.html" class="related-card">
+        <div class="related-cat">SDR · Radio</div>
+        <h4>HackRF One + Portapack</h4>
+        <p>SDR portátil 1 MHz – 6 GHz</p>
+      </a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-mini">
+    <a href="../index.html" class="footer-logo"><i class="fa-solid fa-shield-halved"></i> HACKPERU</a>
+    <p>© 2026 HackPeru — Lima, Perú</p>
+    <a href="https://wa.me/51999999999" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> Contactar</a>
+  </div>
+</footer>
+
+<script>
+  const toggle = document.getElementById('menu-toggle');
+  const mm = document.getElementById('mobile-menu');
+  toggle.addEventListener('click', () => {
+    const o = mm.style.display === 'flex';
+    mm.style.display = o ? 'none' : 'flex';
+    toggle.querySelector('i').className = o ? 'fa-solid fa-bars' : 'fa-solid fa-xmark';
+  });
+</script>
+</body>
+</html>

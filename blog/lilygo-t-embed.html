@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LilyGO T-Embed: la placa ESP32 más versátil — HackPeru Blog</title>
+  <meta name="description" content="Review del LilyGO T-Embed. Pantalla IPS, codificador rotatorio, micrófono y altavoz. Comparativa con M5Stack y TTGO T-Display." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;600;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="blog.css" />
+</head>
+<body>
+
+<a id="wa-float" href="https://wa.me/51999999999?text=Hola%20HackPeru%20%F0%9F%91%8B%20Vi%20el%20artículo%20del%20LilyGO%20T-Embed%20y%20quiero%20información." target="_blank" rel="noopener">
+  <span class="pulse"></span><i class="fa-brands fa-whatsapp"></i>
+</a>
+
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="../index.html" class="nav-logo"><i class="fa-solid fa-shield-halved"></i><span>HACK<span style="color:#fff">PERU</span></span></a>
+    <ul class="nav-links">
+      <li><a href="../index.html#inicio">Inicio</a></li>
+      <li><a href="../index.html#productos">Productos</a></li>
+      <li><a href="../index.html#servicios">Asesoría</a></li>
+      <li><a href="../index.html#taller">Taller</a></li>
+      <li><a href="index.html" class="active">Blog</a></li>
+      <li><a href="https://wa.me/51999999999" target="_blank" rel="noopener" class="nav-wa"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a></li>
+    </ul>
+    <button id="menu-toggle"><i class="fa-solid fa-bars"></i></button>
+  </div>
+  <div id="mobile-menu">
+    <a href="../index.html">Inicio</a><a href="../index.html#productos">Productos</a>
+    <a href="../index.html#taller">Taller</a><a href="index.html">Blog</a>
+  </div>
+</nav>
+
+<header class="article-hero" style="background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(168,85,247,.07) 0%, transparent 60%), linear-gradient(180deg, var(--bg0) 0%, var(--bg1) 100%);">
+  <div class="hero-inner">
+    <a href="index.html" class="back-link"><i class="fa-solid fa-arrow-left"></i> Volver al blog</a>
+    <span class="article-category cat-purple"><i class="fa-solid fa-display"></i> IoT · Maker · ESP32</span>
+    <h1 class="article-title">LilyGO T-Embed: ¿la placa ESP32 más versátil del mercado?</h1>
+    <div class="article-meta">
+      <span><i class="fa-regular fa-calendar"></i> 22 de abril, 2026</span>
+      <span><i class="fa-regular fa-clock"></i> 2 min de lectura</span>
+      <span><i class="fa-solid fa-tag"></i> ESP32-S3, IoT, Pantalla IPS, Domótica</span>
+    </div>
+  </div>
+</header>
+
+<div class="article-wrap">
+  <article class="article-body">
+
+    <p>La mayoría de las placas ESP32 con pantalla son eso: una pantalla y un ESP32. Pueden mostrar información, conectarse a WiFi y ejecutar código. El LilyGO T-Embed hace todo eso y suma micrófono, altavoz, codificador rotatorio y un factor de forma pensado para integrarse en proyectos físicos sin que parezca que pegaste una placa con cinta.</p>
+
+    <p>El resultado es una plataforma de desarrollo que encaja en un rango sorprendentemente amplio de proyectos: desde scripts de auditoría de seguridad con interfaz visual hasta sistemas de domótica con control por voz, pasando por dashboards IoT e instrumentos de medición con display en tiempo real.</p>
+
+    <h2>El hardware en detalle</h2>
+
+    <p>El corazón es un ESP32-S3, el chip más reciente de Espressif con procesamiento más rápido, mejor manejo de memoria y USB nativo. La pantalla es una IPS de 1.9 pulgadas — no enorme, pero la calidad de color es notablemente mejor que las TFT estándar que vienen con la mayoría de módulos de desarrollo.</p>
+
+    <p>El codificador rotatorio es el componente que más diferencia al T-Embed. Permite navegar menús, ajustar valores y seleccionar opciones con precisión, sin ocupar los pines GPIO con múltiples botones. En proyectos de seguridad — un menú de herramientas, un selector de redes — el encoder es más cómodo que cualquier combinación de botones.</p>
+
+    <div class="spec-box">
+      <div class="spec-box-title"><i class="fa-solid fa-microchip"></i> Especificaciones</div>
+      <div class="spec-grid">
+        <div class="spec-item"><span class="spec-label">Procesador</span><span class="spec-val">ESP32-S3 (240 MHz)</span></div>
+        <div class="spec-item"><span class="spec-label">Pantalla</span><span class="spec-val">IPS 1.9" color</span></div>
+        <div class="spec-item"><span class="spec-label">Control</span><span class="spec-val">Encoder rotatorio + click</span></div>
+        <div class="spec-item"><span class="spec-label">Audio</span><span class="spec-val">Micrófono + altavoz</span></div>
+        <div class="spec-item"><span class="spec-label">WiFi + BT</span><span class="spec-val">Integrado</span></div>
+        <div class="spec-item"><span class="spec-label">USB</span><span class="spec-val">Type-C (nativo)</span></div>
+      </div>
+    </div>
+
+    <h2>Casos de uso reales</h2>
+
+    <p>Como scanner de redes WiFi con menú navegable por encoder — algo que con un ESP32 genérico requeriría soldar botones externos. Como panel de control para scripts Python o MicroPython con feedback de audio. Como display para variables de seguridad de un sistema IoT (temperatura de servidores, estado de interfaces, alertas). O simplemente como plataforma de prototipado rápido donde el feedback visual y sonoro está resuelto desde el primer día.</p>
+
+    <p>El audio es básico — el altavoz no reemplaza un sistema de sonido — pero para alertas, tonos y síntesis de voz simple cumple perfectamente.</p>
+
+    <h2>Comparativa con alternativas</h2>
+
+    <table class="comp-table">
+      <thead>
+        <tr><th>Placa</th><th>Pantalla</th><th>Encoder</th><th>Audio</th><th>Precio</th></tr>
+      </thead>
+      <tbody>
+        <tr class="highlight">
+          <td>LilyGO T-Embed</td>
+          <td>IPS 1.9"</td>
+          <td class="comp-check">Sí</td>
+          <td class="comp-check">Mic + altavoz</td>
+          <td>$30–45</td>
+        </tr>
+        <tr>
+          <td>M5Stack Core2</td>
+          <td>TFT 2.0" táctil</td>
+          <td class="comp-x">No</td>
+          <td class="comp-check">Mic + altavoz</td>
+          <td>$50–65</td>
+        </tr>
+        <tr>
+          <td>TTGO T-Display S3</td>
+          <td>IPS 1.9"</td>
+          <td class="comp-x">No</td>
+          <td class="comp-x">No</td>
+          <td>$15–22</td>
+        </tr>
+        <tr>
+          <td>M5Dial</td>
+          <td>Round 1.28" táctil</td>
+          <td class="comp-check">Encoder táctil</td>
+          <td class="comp-x">No</td>
+          <td>$20–30</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>El M5Stack Core2 tiene pantalla táctil y más GPIO accesible, pero cuesta más y no tiene encoder. El TTGO T-Display S3 es la opción económica si no necesitas audio ni control rotatorio. El M5Dial es interesante para interfaces minimalistas pero la pantalla redonda limita el uso de texto. El T-Embed es el punto medio más equilibrado si necesitas las cuatro funciones juntas.</p>
+
+    <div class="callout">
+      <i class="fa-solid fa-info-circle"></i>
+      <strong>Compatible con:</strong> Arduino IDE, PlatformIO, MicroPython y ESP-IDF. La comunidad LilyGO mantiene ejemplos actualizados en GitHub que cubren la mayoría de los periféricos integrados.
+    </div>
+
+    <p>Para quien quiere una plataforma de desarrollo que resuelve el hardware periférico de una vez y permite concentrarse en el software, el T-Embed es una de las mejores opciones del ecosistema ESP32 a ese precio.</p>
+
+  </article>
+
+  <div class="product-cta">
+    <div class="cta-info">
+      <div class="cta-label"><i class="fa-solid fa-store"></i> Disponible en HackPeru</div>
+      <div class="cta-product-name">LilyGO T-Embed</div>
+      <div class="cta-price">~$30 – 45 USD · Envío a todo Perú</div>
+    </div>
+    <div class="cta-actions">
+      <a href="../index.html#productos" class="btn-store"><i class="fa-solid fa-microchip"></i> Ver en la tienda</a>
+      <a href="https://wa.me/51999999999?text=Hola%2C%20quiero%20el%20LilyGO%20T-Embed.%20Vi%20el%20artículo%20del%20blog." target="_blank" rel="noopener" class="btn-wa-cta"><i class="fa-brands fa-whatsapp"></i> Consultar precio</a>
+    </div>
+  </div>
+
+  <div class="related-section">
+    <p class="related-title">// También te puede interesar</p>
+    <div class="related-grid">
+      <a href="lilygo-t-deck.html" class="related-card">
+        <div class="related-cat">LoRa · Comms</div>
+        <h4>LilyGO T-Deck</h4>
+        <p>LoRa con teclado y GPS</p>
+      </a>
+      <a href="esp32-marauder.html" class="related-card">
+        <div class="related-cat">WiFi · Security</div>
+        <h4>ESP32 Marauder</h4>
+        <p>Auditoría WiFi portátil</p>
+      </a>
+      <a href="heltec-lora-32.html" class="related-card">
+        <div class="related-cat">LoRa</div>
+        <h4>Heltec LoRa 32 V3</h4>
+        <p>Nodo Meshtastic económico</p>
+      </a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-mini">
+    <a href="../index.html" class="footer-logo"><i class="fa-solid fa-shield-halved"></i> HACKPERU</a>
+    <p>© 2026 HackPeru — Lima, Perú</p>
+    <a href="https://wa.me/51999999999" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> Contactar</a>
+  </div>
+</footer>
+<script>
+  const t=document.getElementById('menu-toggle'),m=document.getElementById('mobile-menu');
+  t.addEventListener('click',()=>{const o=m.style.display==='flex';m.style.display=o?'none':'flex';t.querySelector('i').className=o?'fa-solid fa-bars':'fa-solid fa-xmark';});
+</script>
+</body>
+</html>

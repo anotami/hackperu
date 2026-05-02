@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LilyGO T-Deck: mensajes encriptados sin internet ni celular — HackPeru Blog</title>
+  <meta name="description" content="Review del LilyGO T-Deck. Terminal LoRa con teclado físico, pantalla táctil y GPS. La comunicación táctica más accesible del mercado maker." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;600;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="blog.css" />
+</head>
+<body>
+
+<a id="wa-float" href="https://wa.me/51999999999?text=Hola%20HackPeru%20%F0%9F%91%8B%20Vi%20el%20artículo%20del%20LilyGO%20T-Deck%20y%20quiero%20información." target="_blank" rel="noopener">
+  <span class="pulse"></span><i class="fa-brands fa-whatsapp"></i>
+</a>
+
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="../index.html" class="nav-logo"><i class="fa-solid fa-shield-halved"></i><span>HACK<span style="color:#fff">PERU</span></span></a>
+    <ul class="nav-links">
+      <li><a href="../index.html#inicio">Inicio</a></li>
+      <li><a href="../index.html#productos">Productos</a></li>
+      <li><a href="../index.html#servicios">Asesoría</a></li>
+      <li><a href="../index.html#taller">Taller</a></li>
+      <li><a href="index.html" class="active">Blog</a></li>
+      <li><a href="https://wa.me/51999999999" target="_blank" rel="noopener" class="nav-wa"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a></li>
+    </ul>
+    <button id="menu-toggle"><i class="fa-solid fa-bars"></i></button>
+  </div>
+  <div id="mobile-menu">
+    <a href="../index.html">Inicio</a><a href="../index.html#productos">Productos</a>
+    <a href="../index.html#taller">Taller</a><a href="index.html">Blog</a>
+  </div>
+</nav>
+
+<header class="article-hero" style="background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(0,212,255,.07) 0%, transparent 60%), linear-gradient(180deg, var(--bg0) 0%, var(--bg1) 100%);">
+  <div class="hero-inner">
+    <a href="index.html" class="back-link"><i class="fa-solid fa-arrow-left"></i> Volver al blog</a>
+    <span class="article-category cat-cyan"><i class="fa-solid fa-keyboard"></i> LoRa · Comms · Supervivencia</span>
+    <h1 class="article-title">LilyGO T-Deck: mensajes encriptados sin internet, sin celular</h1>
+    <div class="article-meta">
+      <span><i class="fa-regular fa-calendar"></i> 9 de febrero, 2026</span>
+      <span><i class="fa-regular fa-clock"></i> 2 min de lectura</span>
+      <span><i class="fa-solid fa-tag"></i> LoRa, Meshtastic, Teclado, GPS</span>
+    </div>
+  </div>
+</header>
+
+<div class="article-wrap">
+  <article class="article-body">
+
+    <p>El problema con los nodos Meshtastic estándar es que están bien para recibir mensajes, pero escribir en ellos es una pesadilla. Con un Heltec LoRa 32 o un T-Beam, tienes que usar la app del teléfono conectada por Bluetooth. Funciona, pero añade una dependencia y drena la batería del móvil.</p>
+
+    <p>El LilyGO T-Deck resuelve ese problema de la forma más directa posible: le pone un teclado físico QWERTY al nodo LoRa. El resultado es un dispositivo autónomo que se parece bastante a un BlackBerry de bolsillo, pero que no necesita SIM ni datos para comunicarse.</p>
+
+    <h2>El hardware</h2>
+
+    <p>El T-Deck integra en una sola placa un ESP32-S3, un módulo LoRa SX1262, pantalla táctil IPS de 2.8 pulgadas y un teclado QWERTY físico de tamaño reducido pero perfectamente usable con los pulgares. Opcionalmente puede agregar módulo GPS para compartir ubicación en tiempo real.</p>
+
+    <p>El teclado es lo que diferencia al T-Deck de cualquier otra opción del ecosistema maker. Escribir un mensaje completo en un nodo LoRa sin depender del teléfono era imposible hasta que apareció este dispositivo.</p>
+
+    <div class="spec-box">
+      <div class="spec-box-title"><i class="fa-solid fa-microchip"></i> Especificaciones</div>
+      <div class="spec-grid">
+        <div class="spec-item"><span class="spec-label">Procesador</span><span class="spec-val">ESP32-S3</span></div>
+        <div class="spec-item"><span class="spec-label">LoRa</span><span class="spec-val">SX1262 (868/915 MHz)</span></div>
+        <div class="spec-item"><span class="spec-label">Pantalla</span><span class="spec-val">IPS 2.8" táctil</span></div>
+        <div class="spec-item"><span class="spec-label">Teclado</span><span class="spec-val">QWERTY físico</span></div>
+        <div class="spec-item"><span class="spec-label">GPS</span><span class="spec-val">Módulo opcional</span></div>
+        <div class="spec-item"><span class="spec-label">WiFi + BT</span><span class="spec-val">Integrado (ESP32-S3)</span></div>
+      </div>
+    </div>
+
+    <h2>Meshtastic en el T-Deck</h2>
+
+    <p>El firmware oficial de Meshtastic tiene soporte nativo para el T-Deck. La instalación es igual de sencilla que en cualquier otro nodo: entras a la web de flasheo de Meshtastic desde el navegador, conectas el dispositivo por USB y en cinco minutos está corriendo. La pantalla táctil muestra el mapa de nodos, el chat y el estado de la red. El teclado permite escribir mensajes directamente.</p>
+
+    <p>Para uso en campo — excursiones, emergencias, eventos sin cobertura — el T-Deck es probablemente el dispositivo Meshtastic más práctico del mercado. No necesitas teléfono, no necesitas batería adicional conectada, no necesitas Bluetooth encendido. Solo el T-Deck.</p>
+
+    <h2>Comparativa</h2>
+
+    <table class="comp-table">
+      <thead>
+        <tr><th>Opción</th><th>Teclado físico</th><th>GPS</th><th>Autónomo</th><th>Precio</th></tr>
+      </thead>
+      <tbody>
+        <tr class="highlight">
+          <td>LilyGO T-Deck</td>
+          <td class="comp-check">Sí</td>
+          <td class="comp-check">Opcional</td>
+          <td class="comp-check">Sí</td>
+          <td>$45–60</td>
+        </tr>
+        <tr>
+          <td>T-Beam + smartphone</td>
+          <td class="comp-warn">Del teléfono</td>
+          <td class="comp-check">Sí</td>
+          <td class="comp-x">No (BT requerido)</td>
+          <td>$35–55 + teléfono</td>
+        </tr>
+        <tr>
+          <td>goTenna Mesh</td>
+          <td class="comp-x">No</td>
+          <td class="comp-x">No</td>
+          <td class="comp-x">No (app requerida)</td>
+          <td>$80–120</td>
+        </tr>
+        <tr>
+          <td>Meshtastic + Heltec V3</td>
+          <td class="comp-x">No</td>
+          <td class="comp-x">No</td>
+          <td class="comp-warn">Solo recepción</td>
+          <td>$15–25</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>La única limitación que hay que mencionar: el T-Deck no tiene tarjeta SIM. No es un teléfono, no hace llamadas, no conecta a redes celulares. Funciona exclusivamente con LoRa. Si el destinatario del mensaje no tiene un nodo Meshtastic en rango (directo o a través de repetidores), el mensaje no llega. Eso no es un defecto del dispositivo — es simplemente como funciona LoRa.</p>
+
+    <div class="callout">
+      <i class="fa-solid fa-info-circle"></i>
+      <strong>Tip para Lima:</strong> Hay nodos Meshtastic activos en varios distritos de Lima. Con un T-Deck configurado en la red pública puedes comunicarte con otros usuarios sin nada más que el dispositivo.
+    </div>
+
+    <p>Para comunicación táctica, preparación ante emergencias o simplemente explorar redes mesh sin depender de infraestructura comercial, el T-Deck tiene muy pocos rivales a ese precio.</p>
+
+  </article>
+
+  <div class="product-cta">
+    <div class="cta-info">
+      <div class="cta-label"><i class="fa-solid fa-store"></i> Disponible en HackPeru</div>
+      <div class="cta-product-name">LilyGO T-Deck</div>
+      <div class="cta-price">~$45 – 60 USD · Con o sin GPS · Envío nacional</div>
+    </div>
+    <div class="cta-actions">
+      <a href="../index.html#productos" class="btn-store"><i class="fa-solid fa-microchip"></i> Ver en la tienda</a>
+      <a href="https://wa.me/51999999999?text=Hola%2C%20quiero%20el%20LilyGO%20T-Deck.%20Vi%20el%20artículo%20del%20blog." target="_blank" rel="noopener" class="btn-wa-cta"><i class="fa-brands fa-whatsapp"></i> Consultar precio</a>
+    </div>
+  </div>
+
+  <div class="related-section">
+    <p class="related-title">// También te puede interesar</p>
+    <div class="related-grid">
+      <a href="heltec-lora-32.html" class="related-card">
+        <div class="related-cat">LoRa</div>
+        <h4>Heltec LoRa 32 V3</h4>
+        <p>Nodo Meshtastic más económico</p>
+      </a>
+      <a href="lilygo-t-embed.html" class="related-card">
+        <div class="related-cat">IoT</div>
+        <h4>LilyGO T-Embed</h4>
+        <p>ESP32 con pantalla y encoder</p>
+      </a>
+      <a href="radio-solar.html" class="related-card">
+        <div class="related-cat">Supervivencia</div>
+        <h4>Radio Solar de Emergencia</h4>
+        <p>AM/FM sin corriente ni celular</p>
+      </a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-mini">
+    <a href="../index.html" class="footer-logo"><i class="fa-solid fa-shield-halved"></i> HACKPERU</a>
+    <p>© 2026 HackPeru — Lima, Perú</p>
+    <a href="https://wa.me/51999999999" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> Contactar</a>
+  </div>
+</footer>
+<script>
+  const t=document.getElementById('menu-toggle'),m=document.getElementById('mobile-menu');
+  t.addEventListener('click',()=>{const o=m.style.display==='flex';m.style.display=o?'none':'flex';t.querySelector('i').className=o?'fa-solid fa-bars':'fa-solid fa-xmark';});
+</script>
+</body>
+</html>

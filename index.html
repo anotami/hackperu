@@ -1,0 +1,1771 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HackPeru — Tienda de Seguridad & Tecnología</title>
+  <meta name="description" content="Dispositivos de pentesting, comunicación segura y electrónica táctica. Venta, asesoría y talleres en Perú." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;600;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    /* ─── Variables ─────────────────────────────── */
+    :root {
+      --bg0: #050a0f;
+      --bg1: #0d1117;
+      --bg2: #161b22;
+      --bg3: #1c2333;
+      --green: #00ff88;
+      --cyan:  #00d4ff;
+      --purple:#a855f7;
+      --orange:#f97316;
+      --red:   #ef4444;
+      --text:  #f0f6fc;
+      --muted: #8b949e;
+      --border:#30363d;
+      --radius:12px;
+      --shadow: 0 4px 24px rgba(0,0,0,.6);
+    }
+
+    /* ─── Reset ─────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg0);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+    ul { list-style: none; }
+
+    /* ─── Scrollbar ──────────────────────────────── */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg1); }
+    ::-webkit-scrollbar-thumb { background: var(--green); border-radius: 3px; }
+
+    /* ─── Typography ────────────────────────────── */
+    .mono { font-family: 'Share Tech Mono', monospace; }
+    .title-font { font-family: 'Rajdhani', sans-serif; font-weight: 700; }
+    h1,h2,h3 { font-family: 'Rajdhani', sans-serif; font-weight: 700; }
+
+    /* ─── Utility ───────────────────────────────── */
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+    .tag {
+      display: inline-block;
+      font-size: .7rem;
+      font-weight: 600;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      padding: .2rem .7rem;
+      border-radius: 999px;
+      border: 1px solid;
+    }
+    .tag-green  { color: var(--green);  border-color: var(--green);  background: rgba(0,255,136,.08); }
+    .tag-cyan   { color: var(--cyan);   border-color: var(--cyan);   background: rgba(0,212,255,.08); }
+    .tag-purple { color: var(--purple); border-color: var(--purple); background: rgba(168,85,247,.08); }
+    .tag-orange { color: var(--orange); border-color: var(--orange); background: rgba(249,115,22,.08); }
+    .tag-red    { color: var(--red);    border-color: var(--red);    background: rgba(239,68,68,.08); }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      padding: .75rem 1.6rem;
+      border-radius: var(--radius);
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      letter-spacing: .04em;
+      cursor: pointer;
+      transition: all .2s;
+      border: none;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--green), #00cc6a);
+      color: #000;
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,255,136,.35); }
+    .btn-outline {
+      background: transparent;
+      border: 1.5px solid var(--green);
+      color: var(--green);
+    }
+    .btn-outline:hover { background: rgba(0,255,136,.1); transform: translateY(-2px); }
+    .btn-wa {
+      background: linear-gradient(135deg, #25d366, #128c7e);
+      color: #fff;
+    }
+    .btn-wa:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(37,211,102,.4); }
+    .section-label {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: .8rem;
+      color: var(--green);
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      margin-bottom: .5rem;
+      display: block;
+    }
+    .section-title {
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      margin-bottom: 1rem;
+    }
+    .section-sub {
+      color: var(--muted);
+      max-width: 600px;
+      font-size: 1.05rem;
+    }
+    .section-header { margin-bottom: 3rem; }
+
+    /* ─── Grid bg ───────────────────────────────── */
+    .grid-bg {
+      background-image:
+        linear-gradient(rgba(0,255,136,.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,255,136,.04) 1px, transparent 1px);
+      background-size: 40px 40px;
+    }
+
+    /* ─── Glow text ─────────────────────────────── */
+    .glow { text-shadow: 0 0 20px rgba(0,255,136,.5), 0 0 40px rgba(0,255,136,.2); }
+    .glow-cyan { text-shadow: 0 0 20px rgba(0,212,255,.5); }
+
+    /* ─── Floating WA button ───────────────────── */
+    #wa-float {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      z-index: 999;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #25d366, #128c7e);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+      color: #fff;
+      box-shadow: 0 4px 20px rgba(37,211,102,.5);
+      transition: transform .2s, box-shadow .2s;
+    }
+    #wa-float:hover {
+      transform: scale(1.1) rotate(-8deg);
+      box-shadow: 0 8px 32px rgba(37,211,102,.7);
+    }
+    #wa-float .pulse {
+      position: absolute;
+      inset: -6px;
+      border-radius: 50%;
+      border: 2px solid #25d366;
+      animation: pulse-ring 2s infinite;
+    }
+    @keyframes pulse-ring {
+      0%   { transform: scale(1);   opacity: .8; }
+      100% { transform: scale(1.4); opacity: 0; }
+    }
+
+    /* ─── Navigation ────────────────────────────── */
+    #navbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 900;
+      background: rgba(5,10,15,.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      transition: background .3s;
+    }
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 68px;
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: .6rem;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 1.2rem;
+      color: var(--green);
+    }
+    .nav-logo i { font-size: 1.4rem; }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+    }
+    .nav-links a {
+      font-size: .92rem;
+      font-weight: 600;
+      color: var(--muted);
+      transition: color .2s;
+      font-family: 'Rajdhani', sans-serif;
+      letter-spacing: .05em;
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--green); }
+    .nav-wa {
+      display: flex;
+      align-items: center;
+      gap: .4rem;
+      background: rgba(37,211,102,.12);
+      border: 1px solid rgba(37,211,102,.3);
+      color: #25d366 !important;
+      padding: .4rem 1rem;
+      border-radius: 999px;
+      font-size: .85rem !important;
+    }
+    #menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--text);
+      font-size: 1.4rem;
+      cursor: pointer;
+    }
+    #mobile-menu {
+      display: none;
+      flex-direction: column;
+      gap: 0;
+      background: var(--bg1);
+      border-top: 1px solid var(--border);
+      padding: 1rem 1.5rem;
+    }
+    #mobile-menu a {
+      padding: .8rem 0;
+      border-bottom: 1px solid var(--border);
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 600;
+      font-size: 1.05rem;
+      color: var(--muted);
+      transition: color .2s;
+    }
+    #mobile-menu a:last-child { border-bottom: none; }
+    #mobile-menu a:hover { color: var(--green); }
+
+    /* ─── Hero ──────────────────────────────────── */
+    #inicio {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      padding-top: 68px;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 0%, rgba(0,255,136,.08) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 50% at 100% 100%, rgba(0,212,255,.06) 0%, transparent 50%),
+        linear-gradient(180deg, var(--bg0) 0%, var(--bg1) 100%);
+    }
+    .hero-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(0,255,136,.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,255,136,.05) 1px, transparent 1px);
+      background-size: 50px 50px;
+      mask-image: radial-gradient(ellipse 80% 70% at 50% 50%, black 30%, transparent 80%);
+    }
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+      padding: 6rem 0 4rem;
+    }
+    .hero-pre {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: .85rem;
+      color: var(--green);
+      letter-spacing: .12em;
+      margin-bottom: .8rem;
+    }
+    .hero-title {
+      font-size: clamp(2.4rem, 5vw, 4rem);
+      line-height: 1.1;
+      margin-bottom: 1.2rem;
+    }
+    .hero-title span { color: var(--green); }
+    .hero-desc {
+      color: var(--muted);
+      font-size: 1.05rem;
+      margin-bottom: 2rem;
+      max-width: 480px;
+    }
+    .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+    }
+    .hero-stat-num {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--green);
+    }
+    .hero-stat-lbl { font-size: .8rem; color: var(--muted); }
+    .hero-visual {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .hero-terminal {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: .82rem;
+      box-shadow: var(--shadow), 0 0 40px rgba(0,255,136,.08);
+      width: 100%;
+      max-width: 420px;
+    }
+    .terminal-bar {
+      display: flex;
+      gap: .5rem;
+      margin-bottom: 1.2rem;
+      align-items: center;
+    }
+    .dot { width: 12px; height: 12px; border-radius: 50%; }
+    .dot-r { background: #ef4444; }
+    .dot-y { background: #f59e0b; }
+    .dot-g { background: #22c55e; }
+    .terminal-title { margin-left: .5rem; color: var(--muted); font-size: .75rem; }
+    .terminal-line { margin-bottom: .35rem; line-height: 1.6; }
+    .t-prompt { color: var(--green); }
+    .t-cmd    { color: var(--text); }
+    .t-out    { color: var(--muted); }
+    .t-ok     { color: var(--cyan); }
+    .t-warn   { color: var(--orange); }
+    .cursor {
+      display: inline-block;
+      width: 8px;
+      height: 14px;
+      background: var(--green);
+      vertical-align: text-bottom;
+      animation: blink 1s step-end infinite;
+    }
+    @keyframes blink { 50% { opacity: 0; } }
+
+    /* ─── Section padding ───────────────────────── */
+    section { padding: 6rem 0; }
+    section:nth-child(even) { background: var(--bg1); }
+
+    /* ─── Products ──────────────────────────────── */
+    #productos { background: var(--bg0); }
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+    .product-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: transform .25s, box-shadow .25s, border-color .25s;
+      display: flex;
+      flex-direction: column;
+    }
+    .product-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow);
+    }
+    .product-card.green:hover  { border-color: var(--green);  box-shadow: 0 12px 40px rgba(0,255,136,.15); }
+    .product-card.cyan:hover   { border-color: var(--cyan);   box-shadow: 0 12px 40px rgba(0,212,255,.15); }
+    .product-card.purple:hover { border-color: var(--purple); box-shadow: 0 12px 40px rgba(168,85,247,.15); }
+    .product-card.orange:hover { border-color: var(--orange); box-shadow: 0 12px 40px rgba(249,115,22,.15); }
+    .product-card.red:hover    { border-color: var(--red);    box-shadow: 0 12px 40px rgba(239,68,68,.15); }
+
+    .product-img-wrap {
+      height: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .product-img-wrap.green  { background: linear-gradient(135deg, #061a10, #0d2e1a); }
+    .product-img-wrap.cyan   { background: linear-gradient(135deg, #061218, #0d2230); }
+    .product-img-wrap.purple { background: linear-gradient(135deg, #160d24, #251040); }
+    .product-img-wrap.orange { background: linear-gradient(135deg, #1a0d06, #2e1a0d); }
+    .product-img-wrap.red    { background: linear-gradient(135deg, #1a0606, #2e0d0d); }
+
+    .product-icon {
+      font-size: 5rem;
+      opacity: .7;
+    }
+    .product-icon.green  { color: var(--green); }
+    .product-icon.cyan   { color: var(--cyan); }
+    .product-icon.purple { color: var(--purple); }
+    .product-icon.orange { color: var(--orange); }
+    .product-icon.red    { color: var(--red); }
+
+    .product-badge {
+      position: absolute;
+      top: .8rem;
+      right: .8rem;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: .7rem;
+      background: rgba(0,0,0,.6);
+      border: 1px solid;
+      border-radius: 4px;
+      padding: .2rem .5rem;
+    }
+    .product-badge.green  { color: var(--green); border-color: rgba(0,255,136,.4); }
+    .product-badge.cyan   { color: var(--cyan);  border-color: rgba(0,212,255,.4); }
+    .product-badge.purple { color: var(--purple);border-color: rgba(168,85,247,.4); }
+    .product-badge.orange { color: var(--orange);border-color: rgba(249,115,22,.4); }
+    .product-badge.red    { color: var(--red);   border-color: rgba(239,68,68,.4); }
+
+    .product-body {
+      padding: 1.4rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .product-tags { display: flex; gap: .4rem; flex-wrap: wrap; margin-bottom: .8rem; }
+    .product-name {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: .5rem;
+    }
+    .product-desc { font-size: .88rem; color: var(--muted); margin-bottom: 1rem; flex: 1; }
+    .product-feats { margin-bottom: 1rem; }
+    .product-feats li {
+      font-size: .82rem;
+      color: var(--muted);
+      padding: .15rem 0;
+      display: flex;
+      align-items: center;
+      gap: .4rem;
+    }
+    .product-feats li i { font-size: .6rem; }
+    .product-feats li i.green  { color: var(--green); }
+    .product-feats li i.cyan   { color: var(--cyan); }
+    .product-feats li i.purple { color: var(--purple); }
+    .product-feats li i.orange { color: var(--orange); }
+    .product-feats li i.red    { color: var(--red); }
+
+    .product-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border);
+    }
+    .product-price {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+    }
+    .product-price.green  { color: var(--green); }
+    .product-price.cyan   { color: var(--cyan); }
+    .product-price.purple { color: var(--purple); }
+    .product-price.orange { color: var(--orange); }
+    .product-price.red    { color: var(--red); }
+
+    .btn-ask {
+      display: inline-flex;
+      align-items: center;
+      gap: .4rem;
+      padding: .5rem 1rem;
+      border-radius: 8px;
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 700;
+      font-size: .88rem;
+      background: rgba(37,211,102,.12);
+      border: 1px solid rgba(37,211,102,.3);
+      color: #25d366;
+      transition: all .2s;
+      cursor: pointer;
+    }
+    .btn-ask:hover {
+      background: rgba(37,211,102,.22);
+      transform: translateY(-1px);
+    }
+
+    /* ─── Services ───────────────────────────────── */
+    #servicios { background: var(--bg1); }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1.5rem;
+    }
+    .service-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2rem 1.5rem;
+      transition: transform .25s, border-color .25s;
+      position: relative;
+      overflow: hidden;
+    }
+    .service-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+    }
+    .service-card.s1::before { background: linear-gradient(90deg, var(--green), transparent); }
+    .service-card.s2::before { background: linear-gradient(90deg, var(--cyan), transparent); }
+    .service-card.s3::before { background: linear-gradient(90deg, var(--purple), transparent); }
+    .service-card.s4::before { background: linear-gradient(90deg, var(--orange), transparent); }
+    .service-card:hover { transform: translateY(-4px); border-color: rgba(255,255,255,.15); }
+    .service-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      margin-bottom: 1.2rem;
+    }
+    .service-icon.s1 { background: rgba(0,255,136,.12); color: var(--green); }
+    .service-icon.s2 { background: rgba(0,212,255,.12); color: var(--cyan); }
+    .service-icon.s3 { background: rgba(168,85,247,.12); color: var(--purple); }
+    .service-icon.s4 { background: rgba(249,115,22,.12); color: var(--orange); }
+    .service-card h3 { font-size: 1.15rem; margin-bottom: .6rem; }
+    .service-card p { font-size: .88rem; color: var(--muted); }
+    .service-list { margin-top: 1rem; }
+    .service-list li {
+      font-size: .82rem;
+      color: var(--muted);
+      padding: .25rem 0;
+      display: flex;
+      align-items: flex-start;
+      gap: .5rem;
+    }
+    .service-list li i { color: var(--green); margin-top: .15rem; font-size: .6rem; }
+
+    /* ─── Workshop ───────────────────────────────── */
+    #taller { background: var(--bg0); }
+    .workshop-intro {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+      margin-bottom: 4rem;
+    }
+    .workshop-img {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      height: 300px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 8rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .workshop-img::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at center, rgba(0,255,136,.1) 0%, transparent 70%);
+    }
+    .workshop-text h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); margin-bottom: 1rem; }
+    .workshop-text p  { color: var(--muted); margin-bottom: 1.5rem; }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+    .project-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      transition: transform .25s, border-color .25s;
+    }
+    .project-card:hover { transform: translateY(-4px); border-color: var(--green); }
+    .project-num {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: .75rem;
+      color: var(--green);
+      margin-bottom: .6rem;
+    }
+    .project-card h3 { font-size: 1.1rem; margin-bottom: .5rem; }
+    .project-card p  { font-size: .85rem; color: var(--muted); margin-bottom: 1rem; }
+    .project-tags { display: flex; gap: .4rem; flex-wrap: wrap; margin-bottom: 1rem; }
+    .project-steps {
+      background: var(--bg3);
+      border-radius: 8px;
+      padding: 1rem;
+    }
+    .project-step {
+      display: flex;
+      align-items: flex-start;
+      gap: .8rem;
+      padding: .4rem 0;
+      font-size: .82rem;
+      color: var(--muted);
+    }
+    .step-num {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: rgba(0,255,136,.15);
+      border: 1px solid rgba(0,255,136,.3);
+      color: var(--green);
+      font-family: 'Share Tech Mono', monospace;
+      font-size: .65rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: .1rem;
+    }
+
+    /* ─── About ─────────────────────────────────── */
+    #nosotros { background: var(--bg1); }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+    .about-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      transition: border-color .2s;
+    }
+    .about-card:hover { border-color: var(--green); }
+    .about-card-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 10px;
+      background: rgba(0,255,136,.1);
+      border: 1px solid rgba(0,255,136,.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      color: var(--green);
+      flex-shrink: 0;
+    }
+    .about-card h4 { font-size: .95rem; margin-bottom: .2rem; }
+    .about-card p  { font-size: .82rem; color: var(--muted); }
+
+    /* ─── Contact ────────────────────────────────── */
+    #contacto { background: var(--bg0); }
+    .contact-wrapper {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+    .contact-info h3 { font-size: 1.5rem; margin-bottom: .8rem; }
+    .contact-info p  { color: var(--muted); margin-bottom: 2rem; }
+    .contact-options { display: flex; flex-direction: column; gap: 1rem; margin-bottom: 2rem; }
+    .contact-option {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1rem 1.2rem;
+      transition: border-color .2s, transform .2s;
+    }
+    .contact-option:hover { border-color: #25d366; transform: translateX(4px); }
+    .contact-option-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      background: rgba(37,211,102,.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      color: #25d366;
+      flex-shrink: 0;
+    }
+    .contact-option h4 { font-size: .95rem; margin-bottom: .1rem; }
+    .contact-option p  { font-size: .82rem; color: var(--muted); }
+    .contact-hours {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.2rem 1.5rem;
+    }
+    .contact-hours h4 { font-size: .95rem; margin-bottom: .8rem; display: flex; align-items: center; gap: .5rem; }
+    .contact-hours h4 i { color: var(--cyan); }
+    .hour-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: .85rem;
+      padding: .3rem 0;
+      border-bottom: 1px solid var(--border);
+      color: var(--muted);
+    }
+    .hour-row:last-child { border-bottom: none; }
+    .hour-row span:last-child { color: var(--green); font-family: 'Share Tech Mono', monospace; }
+
+    .contact-form-box {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2rem;
+    }
+    .contact-form-box h3 { font-size: 1.3rem; margin-bottom: 1.5rem; }
+    .form-group { margin-bottom: 1.2rem; }
+    .form-group label {
+      display: block;
+      font-size: .82rem;
+      color: var(--muted);
+      margin-bottom: .4rem;
+      font-family: 'Share Tech Mono', monospace;
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: .75rem 1rem;
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: .9rem;
+      outline: none;
+      transition: border-color .2s;
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus { border-color: var(--green); }
+    .form-group textarea { resize: vertical; min-height: 100px; }
+    .form-group select option { background: var(--bg2); }
+
+    .wa-cta {
+      background: linear-gradient(135deg, rgba(37,211,102,.12), rgba(18,140,126,.08));
+      border: 1px solid rgba(37,211,102,.25);
+      border-radius: var(--radius);
+      padding: 2rem;
+      text-align: center;
+      margin-top: 1.5rem;
+    }
+    .wa-cta h4 { font-size: 1.1rem; margin-bottom: .5rem; }
+    .wa-cta p  { font-size: .85rem; color: var(--muted); margin-bottom: 1.2rem; }
+    .wa-number {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 1.2rem;
+      color: #25d366;
+      margin-bottom: 1rem;
+    }
+
+    /* ─── Disclaimer ─────────────────────────────── */
+    .disclaimer-bar {
+      background: rgba(239,68,68,.08);
+      border-top: 1px solid rgba(239,68,68,.2);
+      border-bottom: 1px solid rgba(239,68,68,.2);
+      padding: 1.5rem 0;
+    }
+    .disclaimer-inner {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+    .disclaimer-icon {
+      font-size: 1.5rem;
+      color: var(--red);
+      flex-shrink: 0;
+      margin-top: .1rem;
+    }
+    .disclaimer-inner h4 {
+      font-size: .95rem;
+      color: var(--red);
+      margin-bottom: .3rem;
+    }
+    .disclaimer-inner p { font-size: .82rem; color: var(--muted); }
+
+    /* ─── Footer ─────────────────────────────────── */
+    footer {
+      background: var(--bg1);
+      border-top: 1px solid var(--border);
+      padding: 3rem 0 2rem;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 3rem;
+      margin-bottom: 2.5rem;
+    }
+    .footer-logo {
+      display: flex;
+      align-items: center;
+      gap: .6rem;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 1.1rem;
+      color: var(--green);
+      margin-bottom: 1rem;
+    }
+    .footer-col h4 {
+      font-size: .85rem;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      color: var(--muted);
+      margin-bottom: 1rem;
+      font-family: 'Share Tech Mono', monospace;
+    }
+    .footer-col a {
+      display: block;
+      font-size: .88rem;
+      color: var(--muted);
+      margin-bottom: .5rem;
+      transition: color .2s;
+    }
+    .footer-col a:hover { color: var(--green); }
+    .footer-desc { font-size: .88rem; color: var(--muted); line-height: 1.7; }
+    .footer-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+      font-size: .82rem;
+      color: var(--muted);
+    }
+    .footer-mono { font-family: 'Share Tech Mono', monospace; color: var(--green); }
+
+    /* ─── Animations ─────────────────────────────── */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity .6s, transform .6s;
+    }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+    /* ─── Responsive ─────────────────────────────── */
+    @media (max-width: 900px) {
+      .hero-content      { grid-template-columns: 1fr; gap: 2rem; padding: 4rem 0 2rem; }
+      .hero-visual       { display: none; }
+      .workshop-intro    { grid-template-columns: 1fr; }
+      .workshop-img      { display: none; }
+      .about-grid        { grid-template-columns: 1fr; }
+      .contact-wrapper   { grid-template-columns: 1fr; }
+      .footer-grid       { grid-template-columns: 1fr 1fr; gap: 2rem; }
+    }
+    @media (max-width: 640px) {
+      .nav-links { display: none; }
+      #menu-toggle { display: block; }
+      .hero-stats { grid-template-columns: repeat(3, 1fr); }
+      .footer-grid { grid-template-columns: 1fr; }
+      .footer-bottom { flex-direction: column; gap: .5rem; text-align: center; }
+      #wa-float { bottom: 1.2rem; right: 1.2rem; width: 52px; height: 52px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══ WhatsApp Float ═══ -->
+<!-- CAMBIAR: reemplaza +51999999999 con tu número real -->
+<a id="wa-float"
+   href="https://wa.me/51999999999?text=Hola%20HackPeru%20%F0%9F%91%8B%20Estoy%20interesado%20en%20sus%20productos%20de%20seguridad."
+   target="_blank" rel="noopener" title="Escríbenos por WhatsApp">
+  <span class="pulse"></span>
+  <i class="fa-brands fa-whatsapp"></i>
+</a>
+
+<!-- ═══ Navbar ═══ -->
+<nav id="navbar">
+  <div class="container">
+    <div class="nav-inner">
+      <a href="#inicio" class="nav-logo">
+        <i class="fa-solid fa-shield-halved"></i>
+        <span>HACK<span style="color:#fff">PERU</span></span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#inicio">Inicio</a></li>
+        <li><a href="#productos">Productos</a></li>
+        <li><a href="#servicios">Asesoría</a></li>
+        <li><a href="#taller">Taller</a></li>
+        <li><a href="#nosotros">Nosotros</a></li>
+        <li>
+          <a href="https://wa.me/51999999999?text=Hola%20HackPeru%20%F0%9F%91%8B%20Quiero%20información%20sobre%20sus%20productos."
+             target="_blank" rel="noopener" class="nav-wa">
+            <i class="fa-brands fa-whatsapp"></i> WhatsApp
+          </a>
+        </li>
+      </ul>
+      <button id="menu-toggle" aria-label="Menú"><i class="fa-solid fa-bars"></i></button>
+    </div>
+    <div id="mobile-menu">
+      <a href="#inicio">Inicio</a>
+      <a href="#productos">Productos</a>
+      <a href="#servicios">Asesoría</a>
+      <a href="#taller">Taller</a>
+      <a href="#nosotros">Nosotros</a>
+      <a href="#contacto">Contacto</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══ Hero ═══ -->
+<section id="inicio">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="container">
+    <div class="hero-content">
+      <div class="hero-text fade-up">
+        <p class="hero-pre">
+          <i class="fa-solid fa-terminal"></i>&nbsp; Seguridad · Pentesting · Comunicación Táctica
+        </p>
+        <h1 class="hero-title">
+          Tecnología de <span class="glow">Seguridad</span><br>
+          para el Mundo Real
+        </h1>
+        <p class="hero-desc">
+          Dispositivos de pentesting, radio definida por software, comunicación LoRa descentralizada
+          y supervivencia táctica. Venta, asesoría personalizada y talleres prácticos en Perú.
+        </p>
+        <div class="hero-actions">
+          <a href="#productos" class="btn btn-primary">
+            <i class="fa-solid fa-microchip"></i> Ver Productos
+          </a>
+          <a href="https://wa.me/51999999999?text=Hola%20HackPeru%20%F0%9F%91%8B%20Quiero%20asesoría%20personalizada."
+             target="_blank" rel="noopener" class="btn btn-wa">
+            <i class="fa-brands fa-whatsapp"></i> Asesoría Gratis
+          </a>
+        </div>
+        <div class="hero-stats">
+          <div>
+            <div class="hero-stat-num">9+</div>
+            <div class="hero-stat-lbl">Dispositivos</div>
+          </div>
+          <div>
+            <div class="hero-stat-num">4</div>
+            <div class="hero-stat-lbl">Talleres</div>
+          </div>
+          <div>
+            <div class="hero-stat-num">100%</div>
+            <div class="hero-stat-lbl">Soporte</div>
+          </div>
+        </div>
+      </div>
+      <div class="hero-visual fade-up">
+        <div class="hero-terminal">
+          <div class="terminal-bar">
+            <div class="dot dot-r"></div>
+            <div class="dot dot-y"></div>
+            <div class="dot dot-g"></div>
+            <span class="terminal-title">hackperu ~ security-tools</span>
+          </div>
+          <div class="terminal-line"><span class="t-prompt">$</span> <span class="t-cmd">scan --target local --mode recon</span></div>
+          <div class="terminal-line t-out">&gt; Iniciando análisis de red...</div>
+          <div class="terminal-line t-ok">[✓] Flipper Zero conectado (SubGHz activo)</div>
+          <div class="terminal-line t-ok">[✓] ESP32 Marauder listo (WiFi audit)</div>
+          <div class="terminal-line t-ok">[✓] HackRF One — SDR 1MHz~6GHz</div>
+          <div class="terminal-line t-ok">[✓] LoRa mesh — 3 nodos activos</div>
+          <div class="terminal-line t-warn">[!] Quansheng UV-K5 — freq scan</div>
+          <div class="terminal-line"><br></div>
+          <div class="terminal-line t-out">&gt; Todos los dispositivos operativos</div>
+          <div class="terminal-line"><span class="t-prompt">$</span> <span class="cursor"></span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ Products ═══ -->
+<section id="productos">
+  <div class="container">
+    <div class="section-header fade-up">
+      <span class="section-label"><i class="fa-solid fa-microchip"></i> Catálogo 2025</span>
+      <h2 class="section-title">Nuestros Productos</h2>
+      <p class="section-sub">
+        Dispositivos seleccionados para investigación de seguridad, pruebas de penetración,
+        comunicación descentralizada y supervivencia táctica.
+      </p>
+    </div>
+
+    <div class="products-grid">
+
+      <!-- 1. Flipper Zero -->
+      <div class="product-card green fade-up">
+        <div class="product-img-wrap green">
+          <i class="fa-solid fa-shield-halved product-icon green"></i>
+          <span class="product-badge green">BESTSELLER</span>
+        </div>
+        <div class="product-body">
+          <div class="product-tags">
+            <span class="tag tag-green">Pentesting</span>
+            <span class="tag tag-cyan">Multi-herramienta</span>
+          </div>
+          <h3 class="product-name">Flipper Zero</h3>
+          <p class="product-desc">
+            La navaja suiza del hacker. Leer, clonar y emular frecuencias Sub-1 GHz, RFID 125kHz,
+            NFC, Bluetooth e Infrarrojos en un dispositivo portátil con pantalla.
+          </p>
+          <ul class="product-feats">
+            <li><i class="fa-solid fa-circle green"></i> Sub-GHz 300-928 MHz</li>
+            <li><i class="fa-solid fa-circle green"></i> RFID / NFC / iButton</li>
+            <li><i class="fa-solid fa-circle green"></i> Infrarrojo universal</li>
+            <li><i class="fa-solid fa-circle green"></i> GPIO / SPI / I2C / UART</li>
+            <li><i class="fa-solid fa-circle green"></i> BadUSB (teclado HID)</li>
+          </ul>
+          <div class="product-footer">
+            <div class="product-price green">~$169–200 USD</div>
+            <a href="https://wa.me/51999999999?text=Hola%2C%20quiero%20información%20sobre%20el%20Flipper%20Zero."
+               target="_blank" rel="noopener" class="btn-ask">
+              <i class="fa-brands fa-whatsapp"></i> Consultar
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. ESP32 Marauder -->
+      <div class="product-card cyan fade-up">
+        <div class="product-img-wrap cyan">
+          <i class="fa-solid fa-wifi product-icon cyan"></i>
+          <span class="product-badge cyan">POPULAR</span>
+        </div>
+        <div class="product-body">
+          <div class="product-tags">
+            <span class="tag tag-cyan">WiFi Audit</span>
+            <span class="tag tag-green">Bluetooth</span>
+          </div>
+          <h3 class="product-name">ESP32 Marauder</h3>
+          <p class="product-desc">
+            Herramienta de bolsillo para auditoría de redes WiFi y Bluetooth. Captura de handshakes,
+            ataques de deautenticación, escaneo de BLE y más.
+          </p>
+          <ul class="product-feats">
+            <li><i class="fa-solid fa-circle cyan"></i> Captura handshakes WPA2</li>
+            <li><i class="fa-solid fa-circle cyan"></i> Deauth / Beacon spam</li>
+            <li><i class="fa-solid fa-circle cyan"></i> Escaneo BLE activo/pasivo</li>
+            <li><i class="fa-solid fa-circle cyan"></i> Evil Portal (WiFi phishing)</li>
+            <li><i class="fa-solid fa-circle cyan"></i> Display TFT integrado</li>
+          </ul>
+          <div class="product-footer">
+            <div class="product-price cyan">~$40–80 USD</div>
+            <a href="https://wa.me/51999999999?text=Hola%2C%20quiero%20información%20sobre%20el%20ESP32%20Marauder."
+               target="_blank" rel="noopener" class="btn-ask">
+              <i class="fa-brands fa-whatsapp"></i> Consultar
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. LilyGO T-Embed -->
+      <div class="product-card purple fade-up">
+        <div class="product-img-wrap purple">
+          <i class="fa-solid fa-display product-icon purple"></i>
+          <span class="product-badge purple">IoT</span>
+        </div>
+        <div class="product-body">
+          <div class="product-tags">
+            <span class="tag tag-purple">IoT</span>
+            <span class="tag tag-cyan">Programable</span>
+          </div>
+          <h3 class="product-name">LilyGO T-Embed</h3>
+          <p class="product-desc">
+            Panel de control IoT programable con pantalla IPS a color, micrófono, altavoz
+            y codificador rotatorio. Perfecto para scripts de seguridad y domótica.
+          </p>
+          <ul class="product-feats">
+            <li><i class="fa-solid fa-circle purple"></i> Pantalla IPS 1.9"</li>
+            <li><i class="fa-solid fa-circle purple"></i> WiFi + Bluetooth</li>
+            <li><i class="fa-solid fa-circle purple"></i> Micrófono + altavoz</li>
+            <li><i class="fa-solid fa-circle purple"></i> Codificador rotatorio</li>
+            <li><i class="fa-solid fa-circle purple"></i> Compatible ESP-IDF / Arduino</li>
+          </ul>
+          <div class="product-footer">
+            <div class="product-price purple">~$30–45 USD</div>
+            <a href="https://wa.me/51999999999?text=Hola%2C%20quiero%20información%20sobre%20el%20LilyGO%20T-Embed."
+               target="_blank" rel="noopener" class="btn-ask">
+              <i class="fa-brands fa-whatsapp"></i> Consultar
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. HackRF One + Portapack -->
+      <div class="product-card green fade-up">
+        <div class="product-img-wrap green">
+          <i class="fa-solid fa-satellite-dish product-icon green"></i>
+          <span class="product-badge green">SDR</span>
+        </div>
+        <div class="product-body">
+          <div class="product-tags">
+            <span class="tag tag-green">Radio SDR</span>
+            <span class="tag tag-orange">1 MHz – 6 GHz</span>
+          </div>
+          <h3 class="product-name">HackRF One + Portapack</h3>
+          <p class="product-desc">
+            Radio Definida por Software portátil con pantalla. Intercepta, analiza y transmite
+            señales de radio desde 1 MHz hasta 6 GHz. El analizador de espectro definitivo.
+          </p>
+          <ul class="product-feats">
+            <li><i class="fa-solid fa-circle green"></i> Rango 1 MHz – 6 GHz</li>
+            <li><i class="fa-solid fa-circle green"></i> Analizador de espectro</li>
+            <li><i class="fa-solid fa-circle green"></i> Replay de señales RF</li>
+            <li><i class="fa-solid fa-circle green"></i> Decodifica ADS-B, POCSAG, APRS</li>
+            <li><i class="fa-solid fa-circle green"></i> Pantalla táctil integrada</li>
+          </ul>
+          <div class="product-footer">
+            <div class="product-price green">~$120–180 USD</div>
+            <a href="https://wa.me/51999999999?text=Hola%2C%20quiero%20información%20sobre%20el%20HackRF%20One%20con%20Portapack."
+               target="_blank" rel="noopener" class="btn-ask">
+              <i class="fa-brands fa-whatsapp"></i> Consultar
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5. Heltec LoRa 32 -->
+      <div class="product-card purple fade-up">
+        <div class="product-img-wrap purple">
+          <i class="fa-solid fa-tower-broadcast product-icon purple"></i>
+          <span class="product-badge purple">LoRa</span>
+        </div>
+        <div class="product-body">
+          <div class="product-tags">
+            <span class="tag tag-purple">LoRa</span>
+            <span class="tag tag-cyan">Meshtastic</span>
+          </div>
+          <h3 class="product-name">Heltec LoRa 32 (V3)</h3>
+          <p class="product-desc">
+            La base ideal para crear nodos de comunicación descentralizada con Meshtastic.
+            LoRa de largo alcance sin internet ni infraestructura celular.
+          </p>
+          <ul class="product-feats">
+            <li><i class="fa-solid fa-circle purple"></i> LoRa 915 / 868 MHz</li>
+            <li><i class="fa-solid fa-circle purple"></i> Pantalla OLED integrada</li>
+            <li><i class="fa-solid fa-circle purple"></i> WiFi + Bluetooth (ESP32-S3)</li>
+            <li><i class="fa-solid fa-circle purple"></i> Compatible Meshtastic</li>
+            <li><i class="fa-solid fa-circle purple"></i> +20 km de alcance (línea vista)</li>
+          </ul>
+          <div class="product-footer">
+            <div class="product-price purple">~$15–25 USD</div>
+            <a href="https://wa.me/51999999999?text=Hola%2C%20quiero%20información%20sobre%20el%20Heltec%20LoRa%2032."
+               target="_blank" rel="noopener" class="btn-ask">
+              <i class="fa-brands fa-whatsapp"></i> Consultar
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 6. LilyGO T-Deck -->
+      <div class="product-card cyan fade-up">
+        <div class="product-img-wrap cyan">
+          <i class="fa-solid fa-keyboard product-icon cyan"></i>
+          <span class="product-badge cyan">COMMS</span>
+        </div>
+        <div class="product-body">
+          <div class="product-tags">
+            <span class="tag tag-cyan">Mensajería</span>
+            <span class="tag tag-purple">Encriptado</span>
+          </div>
+          <h3 class="product-name">LilyGO T-Deck</h3>
+          <p class="product-desc">
+            Dispositivo estilo BlackBerry con teclado físico QWERTY, pantalla táctil y módulo LoRa.
+            Mensajería encriptada sin internet ni SIM. Supervivencia táctica.
+          </p>
+          <ul class="product-feats">
+            <li><i class="fa-solid fa-circle cyan"></i> Teclado QWERTY físico</li>
+            <li><i class="fa-solid fa-circle cyan"></i> LoRa + WiFi + Bluetooth</li>
+            <li><i class="fa-solid fa-circle cyan"></i> Pantalla táctil 2.8"</li>
+            <li><i class="fa-solid fa-circle cyan"></i> GPS opcional</li>
+            <li><i class="fa-solid fa-circle cyan"></i> Compatible Meshtastic</li>
+          </ul>
+          <div class="product-footer">
+            <div class="product-price cyan">~$45–60 USD</div>
+            <a href="https://wa.me/51999999999?text=Hola%2C%20quiero%20información%20sobre%20el%20LilyGO%20T-Deck."
+               target="_blank" rel="noopener" class="btn-ask">
+              <i class="fa-brands fa-whatsapp"></i> Consultar
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 7. Quansheng UV-K5 -->
+      <div class="product-card orange fade-up">
+        <div class="product-img-wrap orange">
+          <i class="fa-solid fa-radio product-icon orange"></i>
+          <span class="product-badge orange">RADIO</span>
+        </div>
+        <div class="product-body">
+          <div class="product-tags">
+            <span class="tag tag-orange">Walkie-Talkie</span>
+            <span class="tag tag-green">Firmware Mod</span>
+          </div>
+          <h3 class="product-name">Quansheng UV-K5</h3>
+          <p class="product-desc">
+            Radio portátil dos vías que soporta firmware modificado (EGSA / k5prog) para
+            escanear prácticamente todo el espectro de frecuencias. Éxito de ventas mundial.
+          </p>
+          <ul class="product-feats">
+            <li><i class="fa-solid fa-circle orange"></i> VHF/UHF + bandas extendidas</li>
+            <li><i class="fa-solid fa-circle orange"></i> Firmware open-source disponible</li>
+            <li><i class="fa-solid fa-circle orange"></i> Escaneo de frecuencias</li>
+            <li><i class="fa-solid fa-circle orange"></i> Pantalla retroiluminada</li>
+            <li><i class="fa-solid fa-circle orange"></i> Batería recargable USB-C</li>
+          </ul>
+          <div class="product-footer">
+            <div class="product-price orange">~$20–35 USD</div>
+            <a href="https://wa.me/51999999999?text=Hola%2C%20quiero%20información%20sobre%20el%20Quansheng%20UV-K5."
+               target="_blank" rel="noopener" class="btn-ask">
+              <i class="fa-brands fa-whatsapp"></i> Consultar
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 8. Radio Solar Emergencia -->
+      <div class="product-card orange fade-up">
+        <div class="product-img-wrap orange">
+          <i class="fa-solid fa-sun product-icon orange"></i>
+          <span class="product-badge orange">SURVIVAL</span>
+        </div>
+        <div class="product-body">
+          <div class="product-tags">
+            <span class="tag tag-orange">Supervivencia</span>
+            <span class="tag tag-green">Solar</span>
+          </div>
+          <h3 class="product-name">Radio Solar de Emergencia</h3>
+          <p class="product-desc">
+            Radio AM/FM/NOAA con linterna LED, banco de energía (powerbank), panel solar y
+            carga por manivela (dínamo). Indispensable en apagones y desastres naturales.
+          </p>
+          <ul class="product-feats">
+            <li><i class="fa-solid fa-circle orange"></i> AM / FM / SW / NOAA</li>
+            <li><i class="fa-solid fa-circle orange"></i> Panel solar + dínamo</li>
+            <li><i class="fa-solid fa-circle orange"></i> Carga USB para celular</li>
+            <li><i class="fa-solid fa-circle orange"></i> Linterna + luz SOS</li>
+            <li><i class="fa-solid fa-circle orange"></i> Resistente al agua</li>
+          </ul>
+          <div class="product-footer">
+            <div class="product-price orange">~$15–30 USD</div>
+            <a href="https://wa.me/51999999999?text=Hola%2C%20quiero%20información%20sobre%20la%20Radio%20Solar%20de%20Emergencia."
+               target="_blank" rel="noopener" class="btn-ask">
+              <i class="fa-brands fa-whatsapp"></i> Consultar
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 9. DSTIKE Deauther Watch -->
+      <div class="product-card red fade-up">
+        <div class="product-img-wrap red">
+          <i class="fa-solid fa-clock product-icon red"></i>
+          <span class="product-badge red">WEARABLE</span>
+        </div>
+        <div class="product-body">
+          <div class="product-tags">
+            <span class="tag tag-red">WiFi</span>
+            <span class="tag tag-cyan">Wearable</span>
+          </div>
+          <h3 class="product-name">DSTIKE Deauther Watch</h3>
+          <p class="product-desc">
+            Reloj inteligente basado en ESP8266 con pantalla OLED. Realiza auditorías WiFi,
+            escaneo de redes y análisis de deautenticación desde tu muñeca.
+          </p>
+          <ul class="product-feats">
+            <li><i class="fa-solid fa-circle red"></i> Pantalla OLED integrada</li>
+            <li><i class="fa-solid fa-circle red"></i> ESP8266 reprogramable</li>
+            <li><i class="fa-solid fa-circle red"></i> Batería LiPo recargable</li>
+            <li><i class="fa-solid fa-circle red"></i> Firmware DSTIKE abierto</li>
+            <li><i class="fa-solid fa-circle red"></i> Correa ajustable</li>
+          </ul>
+          <div class="product-footer">
+            <div class="product-price red">~$40–65 USD</div>
+            <a href="https://wa.me/51999999999?text=Hola%2C%20quiero%20información%20sobre%20el%20DSTIKE%20Deauther%20Watch."
+               target="_blank" rel="noopener" class="btn-ask">
+              <i class="fa-brands fa-whatsapp"></i> Consultar
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /products-grid -->
+  </div>
+</section>
+
+<!-- ═══ Services ═══ -->
+<section id="servicios">
+  <div class="container">
+    <div class="section-header fade-up">
+      <span class="section-label"><i class="fa-solid fa-user-shield"></i> Asesoría</span>
+      <h2 class="section-title">Servicios de Consultoría</h2>
+      <p class="section-sub">
+        No solo vendemos hardware. Te acompañamos antes y después de la compra con asesoría
+        especializada en seguridad ofensiva y defensiva.
+      </p>
+    </div>
+    <div class="services-grid">
+
+      <div class="service-card s1 fade-up">
+        <div class="service-icon s1"><i class="fa-solid fa-magnifying-glass-chart"></i></div>
+        <h3>Asesoría Pre-Compra</h3>
+        <p>Te ayudamos a elegir el dispositivo exacto según tus objetivos, presupuesto y nivel de experiencia.</p>
+        <ul class="service-list">
+          <li><i class="fa-solid fa-circle"></i> Análisis de necesidades</li>
+          <li><i class="fa-solid fa-circle"></i> Comparativa de dispositivos</li>
+          <li><i class="fa-solid fa-circle"></i> Recomendación personalizada</li>
+          <li><i class="fa-solid fa-circle"></i> Consulta 100% gratuita</li>
+        </ul>
+      </div>
+
+      <div class="service-card s2 fade-up">
+        <div class="service-icon s2"><i class="fa-solid fa-network-wired"></i></div>
+        <h3>Pentesting de Redes</h3>
+        <p>Auditoría de seguridad de tu red WiFi, detección de vulnerabilidades y recomendaciones de hardening.</p>
+        <ul class="service-list">
+          <li><i class="fa-solid fa-circle"></i> Escaneo de vulnerabilidades</li>
+          <li><i class="fa-solid fa-circle"></i> Análisis de handshakes WPA2</li>
+          <li><i class="fa-solid fa-circle"></i> Detección de intrusos</li>
+          <li><i class="fa-solid fa-circle"></i> Informe detallado</li>
+        </ul>
+      </div>
+
+      <div class="service-card s3 fade-up">
+        <div class="service-icon s3"><i class="fa-solid fa-tower-broadcast"></i></div>
+        <h3>Configuración LoRa / Meshtastic</h3>
+        <p>Diseño e implementación de redes de comunicación descentralizada con LoRa para zonas sin cobertura.</p>
+        <ul class="service-list">
+          <li><i class="fa-solid fa-circle"></i> Diseño de topología de red</li>
+          <li><i class="fa-solid fa-circle"></i> Configuración de nodos</li>
+          <li><i class="fa-solid fa-circle"></i> Encriptación de mensajes</li>
+          <li><i class="fa-solid fa-circle"></i> Soporte post-instalación</li>
+        </ul>
+      </div>
+
+      <div class="service-card s4 fade-up">
+        <div class="service-icon s4"><i class="fa-solid fa-graduation-cap"></i></div>
+        <h3>Formación Técnica</h3>
+        <p>Sesiones de capacitación personalizadas sobre uso ético de herramientas de seguridad y radiofrecuencia.</p>
+        <ul class="service-list">
+          <li><i class="fa-solid fa-circle"></i> Clases 1 a 1 por WhatsApp / video</li>
+          <li><i class="fa-solid fa-circle"></i> Material de referencia incluido</li>
+          <li><i class="fa-solid fa-circle"></i> Laboratorio virtual guiado</li>
+          <li><i class="fa-solid fa-circle"></i> Certificado de participación</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div style="text-align:center; margin-top:3rem;" class="fade-up">
+      <a href="https://wa.me/51999999999?text=Hola%2C%20quiero%20consultar%20sobre%20sus%20servicios%20de%20asesoría."
+         target="_blank" rel="noopener" class="btn btn-wa" style="font-size:1.05rem; padding:1rem 2rem;">
+        <i class="fa-brands fa-whatsapp"></i> Solicitar Asesoría Gratuita
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ Workshop ═══ -->
+<section id="taller">
+  <div class="container">
+    <div class="section-header fade-up">
+      <span class="section-label"><i class="fa-solid fa-screwdriver-wrench"></i> Taller DIY</span>
+      <h2 class="section-title">Crea tu Propio Dispositivo</h2>
+      <p class="section-sub">
+        Aprende a construir desde cero tus propias herramientas de seguridad.
+        Talleres prácticos con componentes incluidos y soporte continuo.
+      </p>
+    </div>
+
+    <div class="workshop-intro">
+      <div class="workshop-img">
+        <i class="fa-solid fa-microchip" style="color:var(--green); opacity:.6;"></i>
+      </div>
+      <div class="workshop-text fade-up">
+        <h2>¿Por qué construir<br>tu propio dispositivo?</h2>
+        <p>
+          Entender el hardware a fondo te da una ventaja real. Cuando construyes tu propia
+          herramienta, no eres solo un usuario — eres el creador. Nuestros talleres combinan
+          teoría, práctica y proyectos reales para todos los niveles.
+        </p>
+        <p>
+          Cada taller incluye: kit de componentes, guía paso a paso, acceso a nuestro grupo
+          de Discord y soporte técnico por WhatsApp durante 30 días.
+        </p>
+        <a href="https://wa.me/51999999999?text=Hola%2C%20quiero%20inscribirme%20a%20un%20taller%20DIY."
+           target="_blank" rel="noopener" class="btn btn-primary">
+          <i class="fa-solid fa-screwdriver-wrench"></i> Inscribirme a un Taller
+        </a>
+      </div>
+    </div>
+
+    <div class="projects-grid">
+
+      <div class="project-card fade-up">
+        <p class="project-num">// TALLER 01</p>
+        <h3>Nodo Meshtastic con LoRa</h3>
+        <p>Construye un nodo de comunicación descentralizada capaz de enviar mensajes encriptados sin internet ni celular.</p>
+        <div class="project-tags">
+          <span class="tag tag-purple">LoRa</span>
+          <span class="tag tag-cyan">Meshtastic</span>
+          <span class="tag tag-green">Beginner</span>
+        </div>
+        <div class="project-steps">
+          <div class="project-step"><div class="step-num">1</div><span>Soldar antena al Heltec LoRa 32</span></div>
+          <div class="project-step"><div class="step-num">2</div><span>Flashear firmware Meshtastic</span></div>
+          <div class="project-step"><div class="step-num">3</div><span>Configurar canales y encriptación</span></div>
+          <div class="project-step"><div class="step-num">4</div><span>Montar en carcasa impresa 3D</span></div>
+          <div class="project-step"><div class="step-num">5</div><span>Prueba de rango y enlace mesh</span></div>
+        </div>
+      </div>
+
+      <div class="project-card fade-up">
+        <p class="project-num">// TALLER 02</p>
+        <h3>Auditor WiFi ESP32 Marauder</h3>
+        <p>Ensambla tu propia herramienta de auditoría WiFi con display, case personalizable y firmware actualizado.</p>
+        <div class="project-tags">
+          <span class="tag tag-cyan">WiFi</span>
+          <span class="tag tag-red">ESP32</span>
+          <span class="tag tag-green">Intermediate</span>
+        </div>
+        <div class="project-steps">
+          <div class="project-step"><div class="step-num">1</div><span>Seleccionar placa ESP32 + pantalla TFT</span></div>
+          <div class="project-step"><div class="step-num">2</div><span>Flashear firmware Marauder</span></div>
+          <div class="project-step"><div class="step-num">3</div><span>Calibrar pantalla y botones</span></div>
+          <div class="project-step"><div class="step-num">4</div><span>Configurar SD card para logs</span></div>
+          <div class="project-step"><div class="step-num">5</div><span>Auditar red propia y analizar resultados</span></div>
+        </div>
+      </div>
+
+      <div class="project-card fade-up">
+        <p class="project-num">// TALLER 03</p>
+        <h3>Receptor SDR con RTL-SDR</h3>
+        <p>Convierte tu PC en un analizador de espectro de radio. Decodifica ADS-B, APRS, señales de aviones y más.</p>
+        <div class="project-tags">
+          <span class="tag tag-green">SDR</span>
+          <span class="tag tag-orange">Radio</span>
+          <span class="tag tag-green">Beginner</span>
+        </div>
+        <div class="project-steps">
+          <div class="project-step"><div class="step-num">1</div><span>Conectar RTL-SDR USB</span></div>
+          <div class="project-step"><div class="step-num">2</div><span>Instalar SDR# / GQRX</span></div>
+          <div class="project-step"><div class="step-num">3</div><span>Construir antena dipolo</span></div>
+          <div class="project-step"><div class="step-num">4</div><span>Decodificar ADS-B de vuelos</span></div>
+          <div class="project-step"><div class="step-num">5</div><span>Explorar frecuencias locales</span></div>
+        </div>
+      </div>
+
+      <div class="project-card fade-up">
+        <p class="project-num">// TALLER 04</p>
+        <h3>Comunicador Táctico T-Deck</h3>
+        <p>Configura un LilyGO T-Deck como terminal de mensajería encriptada LoRa con teclado físico y GPS.</p>
+        <div class="project-tags">
+          <span class="tag tag-purple">LoRa</span>
+          <span class="tag tag-cyan">GPS</span>
+          <span class="tag tag-orange">Advanced</span>
+        </div>
+        <div class="project-steps">
+          <div class="project-step"><div class="step-num">1</div><span>Flashear firmware Meshtastic en T-Deck</span></div>
+          <div class="project-step"><div class="step-num">2</div><span>Configurar módulo GPS opcional</span></div>
+          <div class="project-step"><div class="step-num">3</div><span>Configurar red mesh privada</span></div>
+          <div class="project-step"><div class="step-num">4</div><span>Encriptación AES-256 de mensajes</span></div>
+          <div class="project-step"><div class="step-num">5</div><span>Prueba de campo entre 2 nodos</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══ About ═══ -->
+<section id="nosotros">
+  <div class="container">
+    <div class="about-grid">
+      <div class="fade-up">
+        <span class="section-label"><i class="fa-solid fa-users"></i> Nosotros</span>
+        <h2 class="section-title">¿Quiénes somos?</h2>
+        <p style="color:var(--muted); margin-bottom:2rem; font-size:1.05rem;">
+          Somos un equipo de entusiastas de la seguridad, la electrónica y la radio en Perú.
+          Importamos, probamos y asesoramos sobre dispositivos de seguridad, comunicación descentralizada
+          y tecnología táctica desde Lima.
+        </p>
+        <p style="color:var(--muted); margin-bottom:2rem;">
+          Cada dispositivo que vendemos lo probamos nosotros mismos. Nuestra misión es democratizar
+          el acceso a herramientas de seguridad de calidad y formar una comunidad de makers y
+          profesionales de la ciberseguridad en el Perú.
+        </p>
+        <a href="https://wa.me/51999999999?text=Hola%20HackPeru%2C%20quiero%20conocer%20más%20sobre%20ustedes."
+           target="_blank" rel="noopener" class="btn btn-outline">
+          <i class="fa-brands fa-whatsapp"></i> Conversar con nosotros
+        </a>
+      </div>
+      <div>
+        <div class="about-card fade-up">
+          <div class="about-card-icon"><i class="fa-solid fa-shield-halved"></i></div>
+          <div>
+            <h4>Productos Verificados</h4>
+            <p>Testeamos cada dispositivo antes de venderlo. Sin estafas, sin hardware falso.</p>
+          </div>
+        </div>
+        <div class="about-card fade-up">
+          <div class="about-card-icon"><i class="fa-solid fa-truck-fast"></i></div>
+          <div>
+            <h4>Envío Nacional</h4>
+            <p>Enviamos a todo el Perú. Lima en 24–48 h. Provincias en 3–5 días hábiles.</p>
+          </div>
+        </div>
+        <div class="about-card fade-up">
+          <div class="about-card-icon"><i class="fa-solid fa-headset"></i></div>
+          <div>
+            <h4>Soporte Post-Venta</h4>
+            <p>30 días de soporte técnico por WhatsApp incluido en cada compra.</p>
+          </div>
+        </div>
+        <div class="about-card fade-up">
+          <div class="about-card-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+          <div>
+            <h4>Comunidad Activa</h4>
+            <p>Grupo de Discord y Telegram con makers, hackers y entusiastas de radio.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ Contact ═══ -->
+<section id="contacto">
+  <div class="container">
+    <div class="section-header fade-up">
+      <span class="section-label"><i class="fa-solid fa-envelope"></i> Contacto</span>
+      <h2 class="section-title">Hablemos</h2>
+      <p class="section-sub">La forma más rápida de contactarnos es por WhatsApp. Respondemos en minutos.</p>
+    </div>
+    <div class="contact-wrapper">
+      <div class="fade-up">
+        <h3>Información de Contacto</h3>
+        <p>Atendemos consultas sobre productos, asesoría técnica, talleres e importaciones.</p>
+        <div class="contact-options">
+          <a href="https://wa.me/51999999999?text=Hola%20HackPeru%20%F0%9F%91%8B"
+             target="_blank" rel="noopener" class="contact-option">
+            <div class="contact-option-icon"><i class="fa-brands fa-whatsapp"></i></div>
+            <div>
+              <h4>WhatsApp</h4>
+              <!-- CAMBIAR: reemplaza con tu número real -->
+              <p>+51 999 999 999 · Respuesta inmediata</p>
+            </div>
+          </a>
+          <div class="contact-option" style="cursor:default;">
+            <div class="contact-option-icon" style="background:rgba(0,212,255,.12); color:var(--cyan);">
+              <i class="fa-solid fa-location-dot"></i>
+            </div>
+            <div>
+              <h4>Ubicación</h4>
+              <p>Lima, Perú · Envíos a todo el país</p>
+            </div>
+          </div>
+          <div class="contact-option" style="cursor:default;">
+            <div class="contact-option-icon" style="background:rgba(168,85,247,.12); color:var(--purple);">
+              <i class="fa-brands fa-discord"></i>
+            </div>
+            <div>
+              <h4>Comunidad Discord</h4>
+              <p>Únete a nuestra comunidad de makers y hackers</p>
+            </div>
+          </div>
+        </div>
+        <div class="contact-hours">
+          <h4><i class="fa-regular fa-clock"></i> Horarios de Atención</h4>
+          <div class="hour-row"><span>Lunes – Viernes</span><span>09:00 – 20:00</span></div>
+          <div class="hour-row"><span>Sábado</span><span>10:00 – 18:00</span></div>
+          <div class="hour-row"><span>Domingo</span><span>Solo WhatsApp</span></div>
+        </div>
+      </div>
+      <div class="contact-form-box fade-up">
+        <h3>Envíanos un Mensaje</h3>
+        <form id="contact-form" onsubmit="handleForm(event)">
+          <div class="form-group">
+            <label>NOMBRE</label>
+            <input type="text" placeholder="Tu nombre completo" required />
+          </div>
+          <div class="form-group">
+            <label>ASUNTO</label>
+            <select>
+              <option value="">Selecciona una opción</option>
+              <option>Consulta sobre producto</option>
+              <option>Asesoría técnica</option>
+              <option>Inscripción a taller</option>
+              <option>Pedido personalizado</option>
+              <option>Otro</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>MENSAJE</label>
+            <textarea placeholder="Cuéntanos qué necesitas..." required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary" style="width:100%; justify-content:center;">
+            <i class="fa-brands fa-whatsapp"></i> Enviar por WhatsApp
+          </button>
+        </form>
+        <div class="wa-cta">
+          <h4>¿Prefieres llamar directo?</h4>
+          <p>Escríbenos por WhatsApp y te respondemos en minutos</p>
+          <div class="wa-number">+51 999 999 999</div>
+          <a href="https://wa.me/51999999999?text=Hola%20HackPeru%20%F0%9F%91%8B%20Vengo%20desde%20la%20web."
+             target="_blank" rel="noopener" class="btn btn-wa">
+            <i class="fa-brands fa-whatsapp"></i> Abrir WhatsApp Ahora
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ Disclaimer ═══ -->
+<div class="disclaimer-bar">
+  <div class="container">
+    <div class="disclaimer-inner">
+      <i class="fa-solid fa-triangle-exclamation disclaimer-icon"></i>
+      <div>
+        <h4>Aviso Legal — Uso Ético y Responsable</h4>
+        <p>
+          Todos los dispositivos listados en esta tienda son vendidos exclusivamente para <strong>uso educativo, investigación de seguridad (White Hat) y auditoría de equipos propios</strong>.
+          El uso de estas herramientas en redes, sistemas o equipos sin autorización expresa del propietario puede constituir un delito en Perú (Ley N° 30096 — Delitos Informáticos)
+          y en la mayoría de países. HackPeru no se responsabiliza del uso indebido de los productos comercializados.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ Footer ═══ -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">
+          <i class="fa-solid fa-shield-halved"></i>
+          <span>HACK<span style="color:var(--text)">PERU</span></span>
+        </div>
+        <p class="footer-desc">
+          Tienda especializada en dispositivos de seguridad, pentesting y comunicación descentralizada.
+          Venta, asesoría y talleres en Perú.
+        </p>
+        <div style="margin-top:1.2rem; display:flex; gap:.8rem;">
+          <a href="https://wa.me/51999999999" target="_blank" rel="noopener"
+             style="color:#25d366; font-size:1.4rem; transition:transform .2s;"
+             onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform=''">
+            <i class="fa-brands fa-whatsapp"></i>
+          </a>
+          <a href="#" style="color:var(--muted); font-size:1.4rem; transition:transform .2s;"
+             onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform=''">
+            <i class="fa-brands fa-discord"></i>
+          </a>
+          <a href="#" style="color:var(--muted); font-size:1.4rem; transition:transform .2s;"
+             onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform=''">
+            <i class="fa-brands fa-telegram"></i>
+          </a>
+          <a href="#" style="color:var(--muted); font-size:1.4rem; transition:transform .2s;"
+             onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform=''">
+            <i class="fa-brands fa-youtube"></i>
+          </a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Productos</h4>
+        <a href="#productos">Flipper Zero</a>
+        <a href="#productos">ESP32 Marauder</a>
+        <a href="#productos">HackRF One</a>
+        <a href="#productos">Heltec LoRa 32</a>
+        <a href="#productos">LilyGO T-Deck</a>
+        <a href="#productos">Ver todos</a>
+      </div>
+      <div class="footer-col">
+        <h4>Servicios</h4>
+        <a href="#servicios">Asesoría Pre-Compra</a>
+        <a href="#servicios">Pentesting de Redes</a>
+        <a href="#servicios">Config. LoRa / Meshtastic</a>
+        <a href="#servicios">Formación Técnica</a>
+        <a href="#taller">Talleres DIY</a>
+      </div>
+      <div class="footer-col">
+        <h4>Información</h4>
+        <a href="#nosotros">Quiénes Somos</a>
+        <a href="#contacto">Contacto</a>
+        <a href="https://wa.me/51999999999" target="_blank" rel="noopener">WhatsApp</a>
+        <a href="#taller">Talleres</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 HackPeru — Seguridad y Tecnología Táctica</span>
+      <span class="footer-mono">Lima, Perú &gt; Todo el País</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  /* ── Mobile menu ── */
+  const toggle = document.getElementById('menu-toggle');
+  const mobileMenu = document.getElementById('mobile-menu');
+  toggle.addEventListener('click', () => {
+    const open = mobileMenu.style.display === 'flex';
+    mobileMenu.style.display = open ? 'none' : 'flex';
+    toggle.querySelector('i').className = open ? 'fa-solid fa-bars' : 'fa-solid fa-xmark';
+  });
+  mobileMenu.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      mobileMenu.style.display = 'none';
+      toggle.querySelector('i').className = 'fa-solid fa-bars';
+    });
+  });
+
+  /* ── Navbar active link ── */
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a[href^="#"]');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        navLinks.forEach(a => {
+          a.classList.toggle('active', a.getAttribute('href') === '#' + e.target.id);
+        });
+      }
+    });
+  }, { rootMargin: '-50% 0px -50% 0px' });
+  sections.forEach(s => observer.observe(s));
+
+  /* ── Scroll animations ── */
+  const fadeEls = document.querySelectorAll('.fade-up');
+  const fadeObserver = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        fadeObserver.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  fadeEls.forEach(el => fadeObserver.observe(el));
+
+  /* ── Contact form → WhatsApp ── */
+  function handleForm(e) {
+    e.preventDefault();
+    const form = e.target;
+    const name = form.querySelector('input[type="text"]').value;
+    const subject = form.querySelector('select').value;
+    const message = form.querySelector('textarea').value;
+    const text = encodeURIComponent(
+      `Hola HackPeru 👋\n\n*Nombre:* ${name}\n*Asunto:* ${subject || 'Consulta general'}\n\n*Mensaje:* ${message}`
+    );
+    window.open(`https://wa.me/51999999999?text=${text}`, '_blank');
+  }
+</script>
+</body>
+</html>
